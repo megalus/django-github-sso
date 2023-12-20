@@ -85,10 +85,10 @@ click = ">8"
 bandit = "*"
 flake8 = "*"
 stela = "*"
-# django-google-sso = "*"
-# django-microsoft-sso = "*"
-django-google-sso = {path = "../django-google-sso", develop = true}
-django-microsoft-sso = {path = "../django-microsoft-sso", develop = true}
+django-google-sso = "*"
+django-microsoft-sso = "*"
+# django-google-sso = {path = "../django-google-sso", develop = true}
+# django-microsoft-sso = {path = "../django-microsoft-sso", develop = true}
 
 
 [tool.stela]

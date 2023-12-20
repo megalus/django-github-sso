@@ -4,7 +4,7 @@
 
 ## Motivation
 
-This library aims to simplify the process of authenticating users with Microsoft in Django Admin pages,
+This library aims to simplify the process of authenticating users with GitHub in Django Admin pages,
 inspired by libraries like [django-admin-sso](https://github.com/matthiask/django-admin-sso/)
 
 ## Why another library?

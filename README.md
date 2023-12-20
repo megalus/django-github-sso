@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-<a href="https://pypi.org/project/django-microsoft-sso/" target="_blank">
+<a href="https://pypi.org/project/django-github-sso/" target="_blank">
 <img alt="PyPI" src="https://img.shields.io/pypi/v/django-github-sso"/></a>
 <a href="https://github.com/megalus/django-github-sso/actions" target="_blank">
 <img alt="Build" src="https://github.com/megalus/django-github-sso/workflows/tests/badge.svg"/>
