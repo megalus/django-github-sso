@@ -12,7 +12,7 @@
 
 ### Example App
 
-To test this library please check the `Example App` provided [here](https://github.com/megalus/django-github-sso/tree/main/example_app).
+To test this library please check the `Example App` provided [here](https://github.com/megalus/django-github-sso/tree/main/example_github_app).
 
 ### Not working?
 
