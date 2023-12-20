@@ -1,10 +1,6 @@
-import glob
-import os
-
 from django.core.checks import Tags, register
 from django.core.checks.messages import Warning
 from django.core.checks.templates import check_for_template_tags_with_the_same_name
-
 
 TEMPLATE_TAG_NAMES = ["show_form", "sso_tags"]
 

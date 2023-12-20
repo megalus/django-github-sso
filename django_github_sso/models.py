@@ -1,5 +1,3 @@
-from base64 import b64encode
-
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.safestring import mark_safe

@@ -7,7 +7,6 @@ from django.contrib.messages import get_messages
 from django.urls import reverse
 
 from django_github_sso import conf
-from django_github_sso.main import GithubAuth
 from django_github_sso.tests.conftest import SECRET_PATH
 
 ROUTE_NAME = "django_github_sso:oauth_callback"

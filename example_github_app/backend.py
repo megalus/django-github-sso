@@ -1,4 +1,3 @@
-import httpx
 from django.contrib import messages
 from django.contrib.auth.backends import ModelBackend
 from github import Auth, Github

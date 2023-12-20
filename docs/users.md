@@ -77,7 +77,7 @@ You can combine the filters to allow only users that match all filters. Some exa
 GITHUB_SSO_ALLOWABLE_DOMAINS = ["my-company.com"]
 GITHUB_SSO_CHECK_ONLY_PRIMARY_EMAIL = False
 ```
-    
+
 ```python
 # Allow only users that are members of the my-company organization
 # and have a primary email with the my-company.com domain
@@ -131,9 +131,9 @@ GITHUB_SSO_SUPERUSER_LIST = ["another-email@my-company.com" "another-user-name"]
 # if no superuser exists in the database at all
 GITHUB_SSO_AUTO_CREATE_FIRST_SUPERUSER = True
 ```
- 
+
 !!! tip "Which Email will be used to save this user on Django?"
-    The primary email will be used. If the option `GITHUB_SSO_CHECK_ONLY_PRIMARY_EMAIL` is `False` 
+    The primary email will be used. If the option `GITHUB_SSO_CHECK_ONLY_PRIMARY_EMAIL` is `False`
     and  `GITHUB_SSO_ALLOWABLE_DOMAINS` is `True` the first valid email will be used.
 
 ## Fine-tuning users before login

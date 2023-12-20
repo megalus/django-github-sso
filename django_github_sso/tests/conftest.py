@@ -13,8 +13,8 @@ from github.NamedUser import NamedUser
 from github.Organization import Organization
 from github.Repository import Repository
 
-from django_github_sso import conf, main, views
-from django_github_sso.main import GithubAuth, UserHelper
+from django_github_sso import conf, views
+from django_github_sso.main import GithubAuth
 
 SECRET_PATH = "/secret/"
 

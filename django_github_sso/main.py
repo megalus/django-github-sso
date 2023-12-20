@@ -8,9 +8,8 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.http import HttpRequest
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-from github import Github, AuthenticatedUser, Organization, Repository
+from github import AuthenticatedUser, Github, Organization, Repository
 from github.AuthenticatedUser import EmailData
-
 from loguru import logger
 from requests_oauthlib import OAuth2Session
 
@@ -140,7 +139,10 @@ class UserHelper:
                         break
 
         if not valid_domain:
-            message = f"No email found in allowable domains (Primary Email: {self.user_email.email})."
+            message = (
+                f"No email found in allowable domains "
+                f"(Primary Email: {self.user_email.email})."
+            )
             logger.warning(message)
             return False, message
 
@@ -170,7 +172,10 @@ class UserHelper:
                         break
 
         if not valid_org:
-            message = f"User {self.user.login} is not member in {org_found if org_found else 'any allowable orgs'}."
+            message = (
+                f"User {self.user.login} is not member "
+                f"in {org_found if org_found else 'any allowable orgs'}."
+            )
             logger.warning(message)
             return False, message
 
@@ -254,7 +259,8 @@ class UserHelper:
             or self.get_user_login() in conf.GITHUB_SSO_SUPERUSER_LIST
         ):
             message_text = _(
-                f"User @{self.get_user_login()} ({user.email}) in GITHUB_SSO_SUPERUSER_LIST. "
+                f"User @{self.get_user_login()} ({user.email}) in "
+                f"GITHUB_SSO_SUPERUSER_LIST. "
                 f"Added SuperUser Permission."
             )
             messages.add_message(self.request, messages.INFO, message_text)

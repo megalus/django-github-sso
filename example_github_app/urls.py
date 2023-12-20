@@ -18,9 +18,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth.views import LoginView
 from django.urls import include, path
-
 from django_microsoft_sso.views import microsoft_slo_view
-from loguru import logger
 
 from example_github_app.settings import INSTALLED_APPS
 from example_github_app.views import secret_page

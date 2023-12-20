@@ -27,8 +27,8 @@ INSTALLED_APPS = [
     # other django apps
     "django.contrib.messages",  # Need for Auth messages
     "django_github_sso",  # Will show as first button in login page
-    "django_google_sso",  
-    "django_microsoft_sso", 
+    "django_google_sso",
+    "django_microsoft_sso",
 ]
 ```
 

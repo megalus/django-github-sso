@@ -3,13 +3,11 @@ from urllib.parse import urlparse
 
 from django.contrib import messages
 from django.contrib.auth import login
-from django.contrib.auth.views import LogoutView
 from django.http import HttpRequest, HttpResponseRedirect
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.http import require_http_methods
-from github import Github, Auth
-
+from github import Auth, Github
 
 from django_github_sso import conf
 from django_github_sso.main import GithubAuth, UserHelper
@@ -67,7 +65,8 @@ def callback(request: HttpRequest) -> HttpResponseRedirect:
             request,
             messages.ERROR,
             _(
-                "No filter defined for GitHub SSO allowable users. Please contact your administrator."
+                "No filter defined for GitHub SSO allowable users. "
+                "Please contact your administrator."
             ),
         )
         return HttpResponseRedirect(login_failed_url)
@@ -95,7 +94,8 @@ def callback(request: HttpRequest) -> HttpResponseRedirect:
             request,
             messages.ERROR,
             _(
-                f"Authorization Error received from SSO: {auth_result['error_description']}."
+                f"Authorization Error received from SSO: "
+                f"{auth_result['error_description']}."
             ),
         )
         return HttpResponseRedirect(login_failed_url)
