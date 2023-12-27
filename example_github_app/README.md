@@ -2,12 +2,12 @@
 
 ## Start the Project
 
-Please create a `.env` file with the following information:
+Please create a `.env.local` file with the following information:
 
 ```dotenv
 GITHUB_SSO_CLIENT_ID="your Client ID here"
 GITHUB_SSO_CLIENT_SECRET="your Client Secret  here"
-GITHUB_SSO_NEEDED_REPOS="my-org/example-repo,other-org/example-another-repo"  # User needs to be a member of all repos listed
+GITHUB_SSO_NEEDED_REPOS=["my-org/example-repo","other-org/example-another-repo"]  # User needs to be a member of all repos listed
 GITHUB_SSO_CALLBACK_DOMAIN=localhost:8000
 ```
 
