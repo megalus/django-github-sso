@@ -81,6 +81,7 @@ class UserHelper:
     user: AuthenticatedUser
     request: Any
     user_email: EmailData | None = None
+    user_changed: bool = False
 
     @property
     def first_name(self) -> str:
@@ -205,13 +206,30 @@ class UserHelper:
         user_model = get_user_model()
         if conf.GITHUB_SSO_UNIQUE_EMAIL:
             user, created = user_model.objects.get_or_create(
-                email=self.get_user_email()
+                email=self.get_user_email(),
+                defaults={"username": self.get_user_login()},
             )
         else:
             user, created = user_model.objects.get_or_create(
                 username=self.get_user_login()
             )
         self.check_first_super_user(user, user_model)
+        self.check_for_update(created, user)
+        if self.user_changed:
+            user.save()
+
+        GitHubSSOUser.objects.update_or_create(
+            user=user,
+            defaults={
+                "github_id": self.get_user_id(),
+                "picture_url": self.get_user_avatar_url(),
+                "user_name": self.get_user_login(),
+            },
+        )
+
+        return user
+
+    def check_for_update(self, created, user):
         if created or conf.GITHUB_SSO_ALWAYS_UPDATE_USER_DATA:
             user.first_name = self.first_name
             user.last_name = self.family_name
@@ -219,15 +237,7 @@ class UserHelper:
             user.email = self.get_user_email()
             user.set_unusable_password()
             self.check_for_permissions(user)
-        user.save()
-
-        github_user, created = GitHubSSOUser.objects.get_or_create(user=user)
-        github_user.github_id = self.get_user_id()
-        github_user.picture_url = self.get_user_avatar_url()
-        github_user.user_name = self.get_user_login()
-        github_user.save()
-
-        return user
+            self.user_changed = True
 
     def check_first_super_user(self, user, user_model):
         if conf.GITHUB_SSO_AUTO_CREATE_FIRST_SUPERUSER:
@@ -241,6 +251,7 @@ class UserHelper:
                 logger.warning(message_text)
                 user.is_superuser = True
                 user.is_staff = True
+                self.user_changed = True
 
     def check_for_permissions(self, user):
         if (
