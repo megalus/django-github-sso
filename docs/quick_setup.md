@@ -135,12 +135,13 @@ GitHub" button:
     ![](images/django_login_with_github_dark.png)
 
 ??? question "How about Django Admin skins, like Grappelli?"
-**Django GitHub SSO** will works with any Django Admin skin which calls the original Django login template, like
-[Grappelli](https://github.com/sehmaschine/django-grappelli), [Django Jazzmin](https://github.com/farridav/django-jazzmin),
-[Django Admin Interface](https://github.com/fabiocaccamo/django-admin-interface)
-and [Django Jet Reboot](https://github.com/assem-ch/django-jet-reboot).
 
-If the skin uses his own login template, the "Login with GitHub" button will not be displayed.
+    **Django GitHub SSO** will works with any Django Admin skin which calls the original Django login template, like
+    [Grappelli](https://github.com/sehmaschine/django-grappelli), [Django Jazzmin](https://github.com/farridav/django-jazzmin),
+    [Django Admin Interface](https://github.com/fabiocaccamo/django-admin-interface)
+    and [Django Jet Reboot](https://github.com/assem-ch/django-jet-reboot).
+
+    If the skin uses his own login template, you will need create your own `admin/login.html` template to add both HTML from custom login.html from the custom package and from this library.
 
 ---
 

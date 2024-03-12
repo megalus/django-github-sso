@@ -24,3 +24,9 @@ Open browser in `http://localhost:8000/secret`
 ## Django Admin skins
 
 Please uncomment on `settings.py` the correct app for the skin you want to test, in `INSTALLED_APPS`.
+
+For `django-unfold` please rename the following css files:
+
+* `example_github_app/static/django_github_sso/microsoft_button_unfold.css` to `static/django_github_sso/github_button.css`
+* `example_microsoft_app/static/django_microsoft_sso/microsoft_button_unfold.css` to `static/django_microsoft_sso/microsoft_button.css`
+* `example_microsoft_app/static/django_google_sso/google_button_unfold.css` to `static/django_google_sso/google_button.css`
