@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v2.0.1 (2024-03-12)
+
+### Fix
+
+* Error when create a user with empty username when a user with no username already exists on database ([`9332314`](https://github.com/megalus/django-github-sso/commit/933231467c468be3567c6c603a8f883840b83ba6))
+
 ## v2.0.0 (2024-03-12)
 
 ### Feature
