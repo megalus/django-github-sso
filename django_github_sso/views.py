@@ -142,6 +142,10 @@ def callback(request: HttpRequest) -> HttpResponseRedirect:
             messages.add_message(request, messages.WARNING, message)
         return HttpResponseRedirect(login_failed_url)
 
+    # Add Access Token in Session
+    if conf.GITHUB_SSO_SAVE_ACCESS_TOKEN:
+        request.session["github_sso_access_token"] = access_token
+
     # Run Pre-Create Callback
     module_path = ".".join(conf.GITHUB_SSO_PRE_CREATE_CALLBACK.split(".")[:-1])
     pre_login_fn = conf.GITHUB_SSO_PRE_CREATE_CALLBACK.split(".")[-1]
@@ -156,10 +160,6 @@ def callback(request: HttpRequest) -> HttpResponseRedirect:
 
     if not user or not user.is_active:
         return HttpResponseRedirect(login_failed_url)
-
-    # Add Access Token in Session
-    if conf.GITHUB_SSO_SAVE_ACCESS_TOKEN:
-        request.session["github_sso_access_token"] = access_token
 
     # Save Session
     request.session.save()
