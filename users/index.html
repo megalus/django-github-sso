@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.13">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.17">
     
     
       
@@ -26,7 +26,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.7e359304.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.bcfcd587.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
@@ -427,6 +427,24 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#fine-tuning-users-before-creation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fine-tuning users before creation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fine-tuning-users-before-login" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fine-tuning users before login
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -750,6 +768,24 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#fine-tuning-users-before-creation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fine-tuning users before creation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fine-tuning-users-before-login" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fine-tuning users before login
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -859,30 +895,62 @@ this, you can set the following options in your <code>settings.py</code>:</p>
 </span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
 </span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c1"># List of emails or github user_names that will be created as superuser</span>
 </span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="n">GITHUB_SSO_SUPERUSER_LIST</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;another-email@my-company.com&quot;</span> <span class="s2">&quot;another-user-name&quot;</span><span class="p">]</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="c1"># If True, the first user that checks in will be created as superuser</span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="c1"># if no superuser exists in the database at all</span>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="n">GITHUB_SSO_AUTO_CREATE_FIRST_SUPERUSER</span> <span class="o">=</span> <span class="kc">True</span>
 </span></code></pre></div>
-<h1 id="if-true-the-first-user-that-checks-in-will-be-created-as-superuser">If True, the first user that checks in will be created as superuser<a class="headerlink" href="#if-true-the-first-user-that-checks-in-will-be-created-as-superuser" title="Permanent link">&para;</a></h1>
-<h1 id="if-no-superuser-exists-in-the-database-at-all">if no superuser exists in the database at all<a class="headerlink" href="#if-no-superuser-exists-in-the-database-at-all" title="Permanent link">&para;</a></h1>
-<p>GITHUB_SSO_AUTO_CREATE_FIRST_SUPERUSER = True
-<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>!!! tip &quot;Which Email will be used to save this user on Django?&quot;
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>    The primary email will be used. If the option `GITHUB_SSO_CHECK_ONLY_PRIMARY_EMAIL` is `False`
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>    and  `GITHUB_SSO_ALLOWABLE_DOMAINS` is `True` the first valid email will be used.
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>
-</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>## Fine-tuning users before login
-</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>
-</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>If you need to do some processing _after_ user is created or retrieved,
-</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>but _before_ the user is logged in, you can set the
-</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>`GITHUB_SSO_PRE_LOGIN_CALLBACK` setting to import a custom function that will be called before the user is logged in.
-</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>This function will receive two arguments: the `user` and `request` objects.
-</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>
-</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>```python
-</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a># myapp/hooks.py
-</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>def pre_login_user(user, request):
-</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>    # Do something with the user
-</span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a>    pass
-</span><span id="__span-11-17"><a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a>
-</span><span id="__span-11-18"><a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a># settings.py
-</span><span id="__span-11-19"><a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a>GITHUB_SSO_PRE_LOGIN_CALLBACK = &quot;myapp.hooks.pre_login_user&quot;
-</span></code></pre></div></p>
+<div class="admonition tip">
+<p class="admonition-title">Which Email will be used to save this user on Django?</p>
+<p>The primary email will be used. If the option <code>GITHUB_SSO_CHECK_ONLY_PRIMARY_EMAIL</code> is <code>False</code>
+and  <code>GITHUB_SSO_ALLOWABLE_DOMAINS</code> is <code>True</code> the first valid email will be used.</p>
+</div>
+<h2 id="fine-tuning-users-before-creation">Fine-tuning users before creation<a class="headerlink" href="#fine-tuning-users-before-creation" title="Permanent link">&para;</a></h2>
+<p>If you need to do some processing <em>before</em> user is created, you can set the
+<code>GITHUB_SSO_PRE_CREATE_CALLBACK</code> setting to import a custom function that will be called before the user is created.
+This function will receive two arguments: the <code>github_user</code> instance and <code>request</code> objects.</p>
+<div class="admonition tip">
+<p class="admonition-title">You can add custom fields to the user model here</p>
+<p>The <code>pre_create_callback</code> function can return a dictionary with the fields and values that will be passed to
+<code>User.objects.create()</code> as the <code>defaults</code> argument. This means you can add custom fields to the user model here or
+change default values for some fields, like <code>username</code>.</p>
+<p>If not defined, the field <code>username</code> is always the Github Login name.</p>
+<p>You can't change the fields: <code>first_name</code>, <code>last_name</code>, <code>email</code> and <code>password</code> using this callback. These fields are
+always passed to <code>User.objects.create()</code> with the values from Graph API and the password is always unusable.</p>
+</div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kn">import</span> <span class="nn">arrow</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="k">def</span> <span class="nf">pre_create_callback</span><span class="p">(</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>    <span class="n">github_user</span><span class="p">:</span> <span class="n">NamedUser</span> <span class="o">|</span> <span class="n">AuthenticatedUser</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="n">HttpRequest</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="sd">    Callback function called before user is created.</span>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="sd">    params:</span>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="sd">        github_user: GitHub User Instance.</span>
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="sd">        request: HttpRequest object.</span>
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>
+</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="sd">    return: dict content to be passed</span>
+</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="sd">            to User.objects.create() as `defaults` argument.</span>
+</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a>
+</span><span id="__span-11-17"><a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a>    <span class="k">return</span> <span class="p">{</span>
+</span><span id="__span-11-18"><a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a>        <span class="s2">&quot;date_joined&quot;</span><span class="p">:</span> <span class="n">arrow</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="n">days</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">datetime</span><span class="p">,</span>
+</span><span id="__span-11-19"><a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a>    <span class="p">}</span>
+</span></code></pre></div>
+<h2 id="fine-tuning-users-before-login">Fine-tuning users before login<a class="headerlink" href="#fine-tuning-users-before-login" title="Permanent link">&para;</a></h2>
+<p>If you need to do some processing <em>after</em> user is created or retrieved,
+but <em>before</em> the user is logged in, you can set the
+<code>GITHUB_SSO_PRE_LOGIN_CALLBACK</code> setting to import a custom function that will be called before the user is logged in.
+This function will receive two arguments: the <code>user</code> and <code>request</code> objects.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># myapp/hooks.py</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="k">def</span> <span class="nf">pre_login_user</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>    <span class="c1"># Do something with the user</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>    <span class="k">pass</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="c1"># settings.py</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="n">GITHUB_SSO_PRE_LOGIN_CALLBACK</span> <span class="o">=</span> <span class="s2">&quot;myapp.hooks.pre_login_user&quot;</span>
+</span></code></pre></div>
 <p>Please remember this function will be invoked only if a user exists, and if it is active.
 In other words, if the user is eligible for login.</p>
 <div class="admonition warning">
@@ -999,7 +1067,7 @@ So, please, be careful with these options.</p>
     <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.c8d2eff1.min.js"></script>
+      <script src="../assets/javascripts/bundle.1e8ae164.min.js"></script>
       
     
   </body>
