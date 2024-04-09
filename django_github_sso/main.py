@@ -5,6 +5,7 @@ import httpx
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.sites.shortcuts import get_current_site
+from django.db.models import Q
 from django.http import HttpRequest
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
@@ -201,18 +202,32 @@ class UserHelper:
 
         return True, message
 
-    def get_or_create_user(self):
+    def get_or_create_user(self, extra_users_args: dict | None = None):
         self.email_is_valid()
         user_model = get_user_model()
+        user_defaults = extra_users_args or {}
+
         if conf.GITHUB_SSO_UNIQUE_EMAIL:
+            if "username" not in user_defaults:
+                user_defaults["username"] = self.get_user_email()
+            if "email" in user_defaults:
+                del user_defaults["email"]
             user, created = user_model.objects.get_or_create(
                 email=self.get_user_email(),
-                defaults={"username": self.get_user_login()},
+                defaults=user_defaults,
             )
         else:
-            user, created = user_model.objects.get_or_create(
-                username=self.get_user_login()
+            query = user_model.objects.filter(
+                githubssouser__user_name=self.get_user_login()
             )
+            if query.exists():
+                user = query.get()
+                created = False
+            else:
+                username = user_defaults.pop("username", self.get_user_login())
+                user, created = user_model.objects.get_or_create(
+                    username=username, defaults=user_defaults
+                )
         self.check_first_super_user(user, user_model)
         self.check_for_update(created, user)
         if self.user_changed:
@@ -245,7 +260,7 @@ class UserHelper:
             if not superuser_exists:
                 message_text = _(
                     f"GITHUB_SSO_AUTO_CREATE_FIRST_SUPERUSER is True. "
-                    f"Adding SuperUser status to email: {self.user_email.email}"
+                    f"Adding SuperUser status to: {self.get_user_name()}"
                 )
                 messages.add_message(self.request, messages.INFO, message_text)
                 logger.warning(message_text)
@@ -259,7 +274,8 @@ class UserHelper:
             or self.get_user_login() in conf.GITHUB_SSO_STAFF_LIST
         ):
             message_text = _(
-                f"User email: {self.user_email} in GITHUB_SSO_STAFF_LIST. "
+                f"User @{self.get_user_login()} ({user.email} "
+                f"in GITHUB_SSO_STAFF_LIST. "
                 f"Added Staff Permission."
             )
             messages.add_message(self.request, messages.INFO, message_text)
@@ -284,6 +300,9 @@ class UserHelper:
         if conf.GITHUB_SSO_UNIQUE_EMAIL:
             query = user_model.objects.filter(email=self.get_user_email())
         else:
-            query = user_model.objects.filter(username=self.get_user_login())
+            query = user_model.objects.filter(
+                Q(githubssouser__user_name=self.get_user_login())
+                | Q(username=self.get_user_login())
+            )
         if query.exists():
             return query.get()

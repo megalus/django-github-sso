@@ -145,6 +145,7 @@ def client_with_session(
     auth_user_mock,
 ):
     settings.GITHUB_SSO_PRE_LOGIN_CALLBACK = "django_github_sso.hooks.pre_login_user"
+    settings.GITHUB_SSO_PRE_CREATE_CALLBACK = "django_github_sso.hooks.pre_create_user"
     settings.GITHUB_SSO_ALLOWABLE_ORGS = ["example"]
     settings.GITHUB_SSO_NEEDED_REPOS = ["example/repo-a"]
     mocker.patch.object(

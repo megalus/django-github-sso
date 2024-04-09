@@ -22,6 +22,12 @@ GITHUB_SSO_AUTHENTICATION_BACKEND = getattr(
     settings, "GITHUB_SSO_AUTHENTICATION_BACKEND", None
 )
 
+GITHUB_SSO_PRE_CREATE_CALLBACK = getattr(
+    settings,
+    "GITHUB_SSO_PRE_CREATE_CALLBACK",
+    "django_github_sso.hooks.pre_create_user",
+)
+
 GITHUB_SSO_PRE_LOGIN_CALLBACK = getattr(
     settings,
     "GITHUB_SSO_PRE_LOGIN_CALLBACK",

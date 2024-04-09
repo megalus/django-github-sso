@@ -147,10 +147,12 @@ def test_inactive_user(
     client_with_session, callback_url, github_mock, auth_user_mock, email_data_mock
 ):
     # Arrange
-    User.objects.create(
+    User.objects.update_or_create(
         username=auth_user_mock.login,
         email=email_data_mock.email,
-        is_active=False,
+        defaults={
+            "is_active": False,
+        },
     )
 
     # Act
@@ -189,10 +191,14 @@ def test_existing_user_login(
     # Arrange
     from django_github_sso import conf
 
-    existing_user = User.objects.create(
+    existing_user, _ = User.objects.update_or_create(
         username=auth_user_mock.login,
         email=email_data_mock.email,
-        is_active=True,
+        defaults={
+            "is_active": True,
+            "is_staff": False,
+            "is_superuser": False,
+        },
     )
 
     settings.GITHUB_SSO_AUTO_CREATE_USERS = False

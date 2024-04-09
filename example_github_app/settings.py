@@ -207,6 +207,9 @@ GITHUB_SSO_SCOPES = [
 # Optional: Add pre-login logic
 GITHUB_SSO_PRE_LOGIN_CALLBACK = "backend.pre_login_callback"
 
+# Optional: Add pre-create logic
+GITHUB_SSO_PRE_CREATE_CALLBACK = "backend.pre_create_callback"
+
 # Optional: Always update user data
 GITHUB_SSO_ALWAYS_UPDATE_USER_DATA = True
 

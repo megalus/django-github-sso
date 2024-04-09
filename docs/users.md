@@ -125,7 +125,6 @@ GITHUB_SSO_STAFF_LIST = ["my-email@my-company.com", "my-user-name"]
 
 # List of emails or github user_names that will be created as superuser
 GITHUB_SSO_SUPERUSER_LIST = ["another-email@my-company.com" "another-user-name"]
-```
 
 # If True, the first user that checks in will be created as superuser
 # if no superuser exists in the database at all
@@ -135,6 +134,46 @@ GITHUB_SSO_AUTO_CREATE_FIRST_SUPERUSER = True
 !!! tip "Which Email will be used to save this user on Django?"
     The primary email will be used. If the option `GITHUB_SSO_CHECK_ONLY_PRIMARY_EMAIL` is `False`
     and  `GITHUB_SSO_ALLOWABLE_DOMAINS` is `True` the first valid email will be used.
+
+## Fine-tuning users before creation
+
+If you need to do some processing _before_ user is created, you can set the
+`GITHUB_SSO_PRE_CREATE_CALLBACK` setting to import a custom function that will be called before the user is created.
+This function will receive two arguments: the `github_user` instance and `request` objects.
+
+!!! tip "You can add custom fields to the user model here"
+
+    The `pre_create_callback` function can return a dictionary with the fields and values that will be passed to
+    `User.objects.create()` as the `defaults` argument. This means you can add custom fields to the user model here or
+    change default values for some fields, like `username`.
+
+    If not defined, the field `username` is always the Github Login name.
+
+    You can't change the fields: `first_name`, `last_name`, `email` and `password` using this callback. These fields are
+    always passed to `User.objects.create()` with the values from Graph API and the password is always unusable.
+
+
+```python
+import arrow
+
+def pre_create_callback(
+    github_user: NamedUser | AuthenticatedUser, request: HttpRequest
+) -> dict | None:
+    """
+    Callback function called before user is created.
+
+    params:
+        github_user: GitHub User Instance.
+        request: HttpRequest object.
+
+    return: dict content to be passed
+            to User.objects.create() as `defaults` argument.
+    """
+
+    return {
+        "date_joined": arrow.utcnow().shift(days=-1).datetime,
+    }
+```
 
 ## Fine-tuning users before login
 
