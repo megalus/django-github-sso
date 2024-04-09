@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v2.1.1 (2024-04-09)
+
+### Fix
+
+* Add token in request before call pre-create callback ([`1ac1bba`](https://github.com/megalus/django-github-sso/commit/1ac1bbacbe0bb2b3b7120d0c148bbde229e0eadd))
+
 ## v2.1.0 (2024-04-09)
 
 ### Feature
