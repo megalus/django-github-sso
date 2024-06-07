@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v2.1.2 (2024-06-07)
+
+### Fix
+
+* Add support to Django USERNAME_FIELD ([`427081b`](https://github.com/megalus/django-github-sso/commit/427081bcdc67c2d229bdcb88baaab5b8153631b4))
+
 ## v2.1.1 (2024-04-09)
 
 ### Fix
