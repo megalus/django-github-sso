@@ -9,9 +9,8 @@
       <env name="DJANGO_SETTINGS_MODULE" value="settings" />
     </envs>
     <option name="SDK_HOME" value="/home/chris/.cache/pypoetry/virtualenvs/django-github-sso-Itx3k1D5-py3.11/bin/python" />
-    <option name="SDK_NAME" value="Python 3.11.4 WSL (Ubuntu): (/home/chris/.cache/pypoetry/virtualenvs/django-github-sso-Itx3k1D5-py3.11/bin/python)" />
     <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/example_github_app" />
-    <option name="IS_MODULE_SDK" value="false" />
+    <option name="IS_MODULE_SDK" value="true" />
     <option name="ADD_CONTENT_ROOTS" value="true" />
     <option name="ADD_SOURCE_ROOTS" value="true" />
     <EXTENSION ID="software.aws.toolkits.jetbrains.core.execution.PythonAwsConnectionExtension">

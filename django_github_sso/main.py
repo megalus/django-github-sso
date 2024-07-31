@@ -218,15 +218,13 @@ class UserHelper:
         if conf.GITHUB_SSO_UNIQUE_EMAIL:
             if self.username_field.name not in user_defaults:
                 user_defaults[self.username_field.name] = self.get_user_email()
-            if "email" in user_defaults:
-                del user_defaults["email"]
             user, created = self.user_model.objects.get_or_create(
-                email=self.get_user_email(),
+                email__iexact=self.get_user_email(),
                 defaults=user_defaults,
             )
         else:
             query = self.user_model.objects.filter(
-                githubssouser__user_name=self.get_user_login()
+                githubssouser__user_name__iexact=self.get_user_login()
             )
             if query.exists():
                 user = query.get()
@@ -236,9 +234,11 @@ class UserHelper:
                     self.username_field.name, self.get_user_login()
                 )
                 create_query = {
-                    self.username_field.attname: username,
+                    f"{self.username_field.attname}__iexact": username,
                     "defaults": user_defaults,
                 }
+                if self.username_field.attname not in user_defaults:
+                    user_defaults[self.username_field.attname] = username
                 user, created = self.user_model.objects.get_or_create(**create_query)
         self.check_first_super_user(user)
         self.check_for_update(created, user)
@@ -286,6 +286,7 @@ class UserHelper:
         if (
             user.email in conf.GITHUB_SSO_STAFF_LIST
             or self.get_user_login() in conf.GITHUB_SSO_STAFF_LIST
+            or "*" in conf.GITHUB_SSO_STAFF_LIST
         ):
             message_text = _(
                 f"User @{self.get_user_login()} ({user.email} "
@@ -312,11 +313,14 @@ class UserHelper:
     def find_user(self):
         user_model = get_user_model()
         if conf.GITHUB_SSO_UNIQUE_EMAIL:
-            query = user_model.objects.filter(email=self.get_user_email())
+            query = user_model.objects.filter(email__iexact=self.get_user_email())
         else:
-            username_query = {self.username_field.attname: self.get_user_login()}
+            username_query = {
+                f"{self.username_field.attname}__iexact": self.get_user_login()
+            }
             query = user_model.objects.filter(
-                Q(githubssouser__user_name=self.get_user_login()) | Q(**username_query)
+                Q(githubssouser__user_name__iexact=self.get_user_login())
+                | Q(**username_query)
             )
         if query.exists():
             return query.get()

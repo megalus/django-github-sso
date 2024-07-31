@@ -135,6 +135,13 @@ GITHUB_SSO_AUTO_CREATE_FIRST_SUPERUSER = True
     The primary email will be used. If the option `GITHUB_SSO_CHECK_ONLY_PRIMARY_EMAIL` is `False`
     and  `GITHUB_SSO_ALLOWABLE_DOMAINS` is `True` the first valid email will be used.
 
+For staff user creation _only_, you can add all users using "*" as the value:
+
+```python
+# Use "*" to add all users as staff
+GITHUB_SSO_STAFF_LIST = ["*"]
+```
+
 ## Fine-tuning users before creation
 
 If you need to do some processing _before_ user is created, you can set the

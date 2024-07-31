@@ -1,4 +1,5 @@
 import importlib
+from copy import deepcopy
 
 import pytest
 
@@ -96,6 +97,40 @@ def test_update_existing_user_record_for_different_emails(
     assert (original_email == user.email) == expected_is_equal
 
 
+def test_add_all_users_to_staff_list(
+    faker, github_mock, auth_user_mock, email_data_mock, callback_request, settings
+):
+    # Arrange
+    settings.GITHUB_SSO_STAFF_LIST = ["*"]
+    settings.GITHUB_SSO_AUTO_CREATE_FIRST_SUPERUSER = False
+    settings.GITHUB_SSO_CALLBACK_DOMAIN = "localhost:8000"
+    importlib.reload(conf)
+
+    emails = [
+        faker.email(),
+        faker.email(),
+        faker.email(),
+    ]
+
+    # Act
+    for email in emails:
+        mock = deepcopy(github_mock)
+        a_mock = deepcopy(auth_user_mock)
+        e_mock = deepcopy(email_data_mock)
+        e_mock.email = email
+        a_mock.get_emails.return_value = [e_mock]
+        a_mock.id = faker.random_int()
+        a_mock.name = faker.name()
+        a_mock.login = faker.user_name()
+        mock.get_user.return_value = a_mock
+        helper = UserHelper(mock, a_mock, callback_request)
+        helper.get_or_create_user()
+        helper.find_user()
+
+    # Assert
+    assert User.objects.filter(is_staff=True).count() == 3
+
+
 def test_create_staff_from_list(
     github_mock, auth_user_mock, callback_request, settings, email_data_mock
 ):
@@ -134,3 +169,21 @@ def test_create_super_user_from_list(
     assert user.is_active is True
     assert user.is_staff is True
     assert user.is_superuser is True
+
+
+def test_duplicated_emails(github_mock, auth_user_mock, callback_request):
+    # Arrange
+    helper = UserHelper(github_mock, auth_user_mock, callback_request)
+    user = helper.get_or_create_user()
+    user.email = user.email.upper()
+    user.username = user.username.upper()
+    user.save()
+
+    # Act
+    same_user_helper = UserHelper(github_mock, auth_user_mock, callback_request)
+    same_user_helper.get_or_create_user()
+    same_user = same_user_helper.find_user()
+
+    # Assert
+    assert user.id == same_user.id
+    assert User.objects.count() == 1
