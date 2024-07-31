@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v2.2.0 (2024-07-31)
+
+### Feature
+
+* Add option to include all created users as staff. ([`56bbfbf`](https://github.com/megalus/django-github-sso/commit/56bbfbfa22b50647b698c3eb360f2eb45b20f571))
+
 ## v2.1.2 (2024-06-07)
 
 ### Fix
