@@ -64,6 +64,11 @@ from django_github_sso.models import GitHubSSOUser
 github_info = GitHubSSOUser.objects.get(user=user)
 ```
 
+!!! tip "You can disable this model"
+    If you don't want to save this basic data in the database, you can disable the `GitHubSSOUser` model by setting the
+    `GITHUB_SSO_SAVE_BASIC_GITHUB_INFO` configuration to `False` in your `settings.py` file.
+
+
 ## About GitHub Scopes
 
 To retrieve this data, **Django GitHub SSO** uses the following scope from [Scopes for OAuth apps](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/scopes-for-oauth-apps):

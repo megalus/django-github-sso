@@ -1,16 +1,17 @@
 import importlib
 from urllib.parse import urlparse
 
-from django.contrib import messages
 from django.contrib.auth import login
 from django.http import HttpRequest, HttpResponseRedirect
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.http import require_http_methods
 from github import Auth, Github
+from loguru import logger
 
 from django_github_sso import conf
 from django_github_sso.main import GithubAuth, UserHelper
+from django_github_sso.utils import send_message
 
 
 @require_http_methods(["GET"])
@@ -51,7 +52,7 @@ def callback(request: HttpRequest) -> HttpResponseRedirect:
 
     # Check if GitHub SSO is enabled
     if not conf.GITHUB_SSO_ENABLED:
-        messages.add_message(request, messages.ERROR, _("GitHub SSO not enabled."))
+        send_message(request, _("GitHub SSO not enabled."))
         return HttpResponseRedirect(login_failed_url)
 
     # Check for at least one filter or allow all users
@@ -61,9 +62,8 @@ def callback(request: HttpRequest) -> HttpResponseRedirect:
         and not conf.GITHUB_SSO_NEEDED_REPOS
         and not conf.GITHUB_SSO_ALLOW_ALL_USERS
     ):
-        messages.add_message(
+        send_message(
             request,
-            messages.ERROR,
             _(
                 "No filter defined for GitHub SSO allowable users. "
                 "Please contact your administrator."
@@ -73,9 +73,7 @@ def callback(request: HttpRequest) -> HttpResponseRedirect:
 
     # First, check for authorization code
     if not code:
-        messages.add_message(
-            request, messages.ERROR, _("Authorization Code not received from SSO.")
-        )
+        send_message(request, _("Authorization Code not received from SSO."))
         return HttpResponseRedirect(login_failed_url)
 
     # Then, check state.
@@ -83,16 +81,13 @@ def callback(request: HttpRequest) -> HttpResponseRedirect:
     next_url = request.session.get("sso_next_url")
 
     if not request_state or state != request_state:
-        messages.add_message(
-            request, messages.ERROR, _("State Mismatch. Time expired?")
-        )
+        send_message(request, _("State Mismatch. Time expired?"))
         return HttpResponseRedirect(login_failed_url)
 
     auth_result = github.get_user_token(code, state)
     if "error" in auth_result:
-        messages.add_message(
+        send_message(
             request,
-            messages.ERROR,
             _(
                 f"Authorization Error received from SSO: "
                 f"{auth_result['error_description']}."
@@ -108,38 +103,42 @@ def callback(request: HttpRequest) -> HttpResponseRedirect:
         g = Github(auth=auth)
         github_user = g.get_user()
     except Exception as error:
-        messages.add_message(request, messages.ERROR, str(error))
+        send_message(request, str(error))
         return HttpResponseRedirect(login_failed_url)
 
     user_helper = UserHelper(g, github_user, request)
 
+    # Run Pre-Validate Callback
+    module_path = ".".join(conf.GITHUB_SSO_PRE_VALIDATE_CALLBACK.split(".")[:-1])
+    pre_validate_fn = conf.GITHUB_SSO_PRE_VALIDATE_CALLBACK.split(".")[-1]
+    module = importlib.import_module(module_path)
+    user_is_valid = getattr(module, pre_validate_fn)(github_user, request)
+
     # Check if User Info is valid to login
     result, message = user_helper.email_is_valid()
-    if not result:
-        messages.add_message(
+    if not result or not user_is_valid:
+        send_message(
             request,
-            messages.ERROR,
             _(
                 f"Email address not allowed: {user_helper.user_email.email}. "
                 f"Please contact your administrator."
             ),
         )
         if conf.GITHUB_SSO_SHOW_ADDITIONAL_ERROR_MESSAGES:
-            messages.add_message(request, messages.WARNING, message)
+            send_message(request, message, level="warning")
         return HttpResponseRedirect(login_failed_url)
 
     result, message = user_helper.user_is_valid()
     if not result:
-        messages.add_message(
+        send_message(
             request,
-            messages.ERROR,
             _(
                 f"GitHub User not allowed: {github_user.login}. "
                 f"Please contact your administrator."
             ),
         )
         if conf.GITHUB_SSO_SHOW_ADDITIONAL_ERROR_MESSAGES:
-            messages.add_message(request, messages.WARNING, message)
+            send_message(request, message, level="warning")
         return HttpResponseRedirect(login_failed_url)
 
     # Add Access Token in Session
@@ -159,6 +158,21 @@ def callback(request: HttpRequest) -> HttpResponseRedirect:
         user = user_helper.find_user()
 
     if not user or not user.is_active:
+        failed_login_message = (
+            f"User not found - User: '{github_user.login}', "
+            f"Email: '{user_helper.user_email.email}'"
+        )
+        if not user and not conf.GITHUB_SSO_AUTO_CREATE_USERS:
+            failed_login_message += ". Auto-Create is disabled."
+
+        if user and not user.is_active:
+            failed_login_message = f"User is not active: '{github_user.login}'"
+
+        if conf.GITHUB_SSO_SHOW_FAILED_LOGIN_MESSAGE:
+            send_message(request, _(failed_login_message), level="warning")
+        else:
+            logger.warning(failed_login_message)
+
         return HttpResponseRedirect(login_failed_url)
 
     # Save Session

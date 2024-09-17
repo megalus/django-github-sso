@@ -10,6 +10,11 @@
     Please check your filters, some combinations can filter all users. Use the option `GITHUB_SSO_SHOW_ADDITIONAL_ERROR_MESSAGES`
     to show additional error messages in django message system when authentication fails.
 
+??? question "System goes looping to admin after login."
+    This is because the user data was received from GitHub, but the user was not created in the database or is not active.
+    To see these errors please check the logs or enable the option `GITHUB_SSO_SHOW_FAILED_LOGIN_MESSAGE` to see failed
+    login messages on browser. Please, make note these messages can be used on exploit attacks.
+
 ### Example App
 
 To test this library please check the `Example App` provided [here](https://github.com/megalus/django-github-sso/tree/main/example_github_app).

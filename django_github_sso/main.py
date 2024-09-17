@@ -170,7 +170,7 @@ class UserHelper:
         valid_org = not conf.GITHUB_SSO_ALLOWABLE_ORGS
         for allowable_org in conf.GITHUB_SSO_ALLOWABLE_ORGS:
             for user_org in user_orgs:
-                if allowable_org == user_org.name:
+                if allowable_org.lower() == user_org.name.lower():
                     org_found = user_org.name
                     if not conf.GITHUB_SSO_ACCEPT_OUTSIDE_COLLABORATORS:
                         org_members = user_org.get_members()
@@ -245,14 +245,15 @@ class UserHelper:
         if self.user_changed:
             user.save()
 
-        GitHubSSOUser.objects.update_or_create(
-            user=user,
-            defaults={
-                "github_id": self.get_user_id(),
-                "picture_url": self.get_user_avatar_url(),
-                "user_name": self.get_user_login(),
-            },
-        )
+        if conf.GITHUB_SSO_SAVE_BASIC_GITHUB_INFO:
+            GitHubSSOUser.objects.update_or_create(
+                user=user,
+                defaults={
+                    "github_id": self.get_user_id(),
+                    "picture_url": self.get_user_avatar_url(),
+                    "user_name": self.get_user_login(),
+                },
+            )
 
         return user
 

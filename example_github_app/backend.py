@@ -56,3 +56,16 @@ def pre_create_callback(
     return {
         "date_joined": arrow.utcnow().shift(days=-1).datetime,
     }
+
+
+def pre_validate_callback(github_user: NamedUser | AuthenticatedUser, request) -> bool:
+    """Callback function called before user is validated.
+
+    Must return a boolean to indicate if user is valid to login.
+
+    params:
+        github_user: GitHub User Instance.
+        request: HttpRequest object.
+    """
+    messages.info(request, f"Running Pre-Validate callback for: {github_user.id}.")
+    return True

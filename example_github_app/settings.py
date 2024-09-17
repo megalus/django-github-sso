@@ -73,6 +73,7 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [],
+        "NAME": "default",
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -168,9 +169,9 @@ AUTHENTICATION_BACKENDS = ["example_github_app.backend.MyBackend"]
 SITE_ID = 1
 
 ###############################
-#                                                          #
-# Test GitHub                                      #
-#                                                          #
+#                             #
+# Test GitHub                 #
+#                             #
 ###############################
 
 # Uncomment GITHUB_SSO_CALLBACK_DOMAIN to use Sites Framework site domain
@@ -204,6 +205,9 @@ GITHUB_SSO_SCOPES = [
     "read:project",
 ]  # add project scopes
 
+# Optional: Add pre-validate logic
+GITHUB_SSO_PRE_VALIDATE_CALLBACK = "backend.pre_validate_callback"
+
 # Optional: Add pre-login logic
 GITHUB_SSO_PRE_LOGIN_CALLBACK = "backend.pre_login_callback"
 
@@ -219,10 +223,17 @@ GITHUB_SSO_ALWAYS_UPDATE_USER_DATA = True
 # Add more info of authentication errors
 GITHUB_SSO_SHOW_ADDITIONAL_ERROR_MESSAGES = True
 
+# Optional: Start or Stop User auto-creation
+# GITHUB_SSO_AUTO_CREATE_USERS = False
+
+# Optional: Show failed login attempt message on browser.
+# This message can be used in exploit attempts.
+# GITHUB_SSO_SHOW_FAILED_LOGIN_MESSAGE = True
+
 ###############################
-#                                                          #
-# Test Microsoft                                  #
-#                                                          #
+#                             #
+# Test Microsoft              #
+#                             #
 ###############################
 
 # Uncomment MICROSOFT_SSO_CALLBACK_DOMAIN to use Sites Framework site domain
@@ -269,9 +280,9 @@ MICROSOFT_SSO_ALWAYS_UPDATE_USER_DATA = True
 # MICROSOFT_SSO_TEXT = "Login using Microsoft 365 Account"
 
 ###############################
-#                                                          #
-# Test Google                                      #
-#                                                          #
+#                             #
+# Test Google                 #
+#                             #
 ###############################
 
 # Uncomment GOOGLE_SSO_CALLBACK_DOMAIN to use Sites Framework site domain
@@ -325,5 +336,5 @@ GOOGLE_SSO_LOGO_URL = (
 # SILENCED_SYSTEM_CHECKS option
 # To use an alternate version for this check,
 # which filters SSO templates, uncomment both options:
-SILENCED_SYSTEM_CHECKS = ["templates.E003"]
+SILENCED_SYSTEM_CHECKS = ["templates.W003"]
 SSO_USE_ALTERNATE_W003 = True  # default: False

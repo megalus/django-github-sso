@@ -50,9 +50,9 @@ keywords = ["github", "django", "sso"]
 license = "MIT"
 classifiers = [
     "Framework :: Django",
-    "Framework :: Django :: 4.1",
     "Framework :: Django :: 4.2",
     "Framework :: Django :: 5.0",
+    "Framework :: Django :: 5.1",
     "Intended Audience :: Developers",
     "Development Status :: 4 - Beta",
     "Environment :: Plugins"
@@ -60,7 +60,7 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = ">=3.10, <4.0"
-django = ">=4.1"
+django = ">=4.2"
 loguru = "*"
 requests-oauthlib = "*"
 PyGithub = "*"
@@ -89,8 +89,8 @@ flake8 = "*"
 stela = "*"
 django-google-sso = "*"
 django-microsoft-sso = "*"
-# django-google-sso = {path = "../django-google-sso", develop = true}
-# django-microsoft-sso = {path = "../django-microsoft-sso", develop = true}
+#django-google-sso = {path = "../django-google-sso", develop = true}
+#django-microsoft-sso = {path = "../django-microsoft-sso", develop = true}
 
 
 [tool.stela]

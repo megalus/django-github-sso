@@ -142,7 +142,23 @@ For staff user creation _only_, you can add all users using "*" as the value:
 GITHUB_SSO_STAFF_LIST = ["*"]
 ```
 
-## Fine-tuning users before creation
+## Fine-tuning validation before user validation
+
+If you need to do some custom validation _before_ user is validated, you can set the
+`GITHUB_SSO_PRE_VALIDATE_CALLBACK` setting to import a custom function that will be called before the user is created.
+This function will receive two arguments: the `github_user` instance from GitHub package and `request` objects.
+
+```python
+# myapp/hooks.py
+def pre_validate_user(github_user, request):
+    # Check some info from GitHub user and/or request
+    return True  # The user can be created
+```
+
+Please note, even if this function returns `True`, the user can be denied if their email is not valid.
+
+
+## Fine-tuning user info before user creation
 
 If you need to do some processing _before_ user is created, you can set the
 `GITHUB_SSO_PRE_CREATE_CALLBACK` setting to import a custom function that will be called before the user is created.
@@ -201,6 +217,11 @@ GITHUB_SSO_PRE_LOGIN_CALLBACK = "myapp.hooks.pre_login_user"
 
 Please remember this function will be invoked only if a user exists, and if it is active.
 In other words, if the user is eligible for login.
+
+!!! tip "You can add your hooks to customize all steps:"
+    * `GITHUB_SSO_PRE_VALIDATE_CALLBACK`: Run before the user is validated.
+    * `GITHUB_SSO_PRE_CREATE_CALLBACK`: Run before the user is created.
+    * `GITHUB_SSO_PRE_LOGIN_CALLBACK`: Run before the user is logged in.
 
 
 !!! warning "Be careful with these options"

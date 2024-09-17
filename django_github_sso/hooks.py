@@ -24,3 +24,18 @@ def pre_create_user(
     return: dict content to be passed to User.objects.create() as `defaults` argument.
     """
     return {}
+
+
+def pre_validate_user(
+    github_user: NamedUser | AuthenticatedUser, request: HttpRequest
+) -> bool:
+    """
+    Callback function called before user is validated.
+
+    Must return a boolean to indicate if user is valid to login.
+
+    params:
+        github_user: GitHub User Instance.
+        request: HttpRequest object.
+    """
+    return True
