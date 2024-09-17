@@ -2,6 +2,16 @@
 
 <!--next-version-placeholder-->
 
+## v3.0.0 (2024-09-17)
+
+### Feature
+
+* Update dependencies and add new options ([`b73c8b1`](https://github.com/megalus/django-github-sso/commit/b73c8b17a41d41c753d255f94c1826a28de5bc5c))
+
+### Breaking
+
+* Update dependencies and add new options ([`b73c8b1`](https://github.com/megalus/django-github-sso/commit/b73c8b17a41d41c753d255f94c1826a28de5bc5c))
+
 ## v2.2.0 (2024-07-31)
 
 ### Feature
