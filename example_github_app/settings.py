@@ -193,6 +193,9 @@ GITHUB_SSO_SAVE_ACCESS_TOKEN = True
 # Uncomment to disable SSO login
 GITHUB_SSO_ENABLED = True  # default: True
 
+# Optional: Disable Django Messages
+# GITHUB_SSO_ENABLE_MESSAGES = False
+
 # Optional: Add if you want to use custom authentication backend
 # GITHUB_SSO_AUTHENTICATION_BACKEND = "backend.MyBackend"
 
