@@ -2,6 +2,16 @@
 
 <!--next-version-placeholder-->
 
+## v3.0.1 (2024-09-21)
+
+### Fix
+
+* Add missing GITHUB_SSO_ENABLE_MESSAGES option ([`0e88d47`](https://github.com/megalus/django-github-sso/commit/0e88d473eea8aa892bb627d88662a9e9b6b00c50))
+
+### Documentation
+
+* Update docs ([`451e278`](https://github.com/megalus/django-github-sso/commit/451e2787f8307ece2dec26437f7bb3e45812ace9))
+
 ## v3.0.0 (2024-09-17)
 
 ### Feature
