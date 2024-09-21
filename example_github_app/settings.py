@@ -184,6 +184,7 @@ GITHUB_SSO_CLIENT_SECRET = env.GITHUB_SSO_CLIENT_SECRET
 GITHUB_SSO_ALLOWABLE_DOMAINS = env.get_or_default("GITHUB_SSO_ALLOWABLE_DOMAINS", [])
 GITHUB_SSO_ALLOWABLE_ORGS = env.get_or_default("GITHUB_SSO_ALLOWABLE_ORGS", [])
 GITHUB_SSO_NEEDED_REPOS = env.get_or_default("GITHUB_SSO_NEEDED_REPOS", [])
+GITHUB_SSO_ALLOW_ALL_USERS = env.get_or_default("GITHUB_SSO_ALLOW_ALL_USERS", False)
 GITHUB_SSO_AUTO_CREATE_FIRST_SUPERUSER = (
     True  # Mark as True, to create superuser on first eligible user login
 )
@@ -192,6 +193,9 @@ GITHUB_SSO_SAVE_ACCESS_TOKEN = True
 
 # Uncomment to disable SSO login
 GITHUB_SSO_ENABLED = True  # default: True
+
+# Optional: Disable Django Messages
+# GITHUB_SSO_ENABLE_MESSAGES = False
 
 # Optional: Add if you want to use custom authentication backend
 # GITHUB_SSO_AUTHENTICATION_BACKEND = "backend.MyBackend"
