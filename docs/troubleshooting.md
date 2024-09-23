@@ -42,6 +42,13 @@
     ]
     ```
 
+??? question "Got this error when migrating: 'The model User is already registered with 'core.GitHubSSOUserAdmin'"
+    This is because you're already define a custom User model and admin in your project. You need to [extended the
+    existing user model](https://docs.djangoproject.com/en/5.1/topics/auth/customizing/#extending-the-existing-user-model)
+    unregistering your current User Admin class and add manually the `GitHubSSOUserAdmin` in your custom class.
+    You can use the `get_current_user_and_admin` helper as explained [here](admin.md) (the recommended action), or
+    alternately, you can add the `django-google-sso` at the end of your `INSTALLED_APPS` list.
+
 ### Example App
 
 To test this library please check the `Example App` provided [here](https://github.com/megalus/django-github-sso/tree/main/example_github_app).
