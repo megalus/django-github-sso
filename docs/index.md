@@ -28,5 +28,5 @@ pip install django-github-sso
 ```
 
 !!! info "Currently this project supports:"
-    * Python 3.10, 3.11 and 3.12
+    * Python 3.11, 3.12 and 3.13
     * Django 4.2, 5.0 and 5.1
