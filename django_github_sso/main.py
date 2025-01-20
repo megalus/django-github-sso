@@ -103,7 +103,7 @@ class UserHelper:
         return self.user.get_repos()
 
     def get_user_name(self) -> str:
-        return self.user.name
+        return self.user.name or ""
 
     def get_user_id(self) -> int:
         return self.user.id

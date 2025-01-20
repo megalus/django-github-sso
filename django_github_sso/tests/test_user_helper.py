@@ -63,6 +63,32 @@ def test_get_or_create_user(
     assert user.is_superuser == auto_create_super_user
 
 
+@pytest.mark.parametrize("auto_create_super_user", [True, False])
+def test_get_or_create_user_with_no_name(
+    auto_create_super_user,
+    callback_request,
+    settings,
+    github_mock,
+    auth_user_mock_no_name,
+):
+    # Arrange
+    settings.GITHUB_SSO_AUTO_CREATE_FIRST_SUPERUSER = auto_create_super_user
+    importlib.reload(conf)
+
+    # Act
+    helper = UserHelper(github_mock, auth_user_mock_no_name, callback_request)
+    user = helper.get_or_create_user()
+
+    # Assert
+    assert user.first_name == helper.first_name
+    assert user.last_name == helper.family_name
+    assert user.username == auth_user_mock_no_name.login
+    assert user.email == helper.user_email.email
+    assert user.is_active is True
+    assert user.is_staff == auto_create_super_user
+    assert user.is_superuser == auto_create_super_user
+
+
 @pytest.mark.parametrize(
     "always_update_user_data, expected_is_equal", [(True, False), (False, True)]
 )
