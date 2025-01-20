@@ -1,6 +1,29 @@
 # CHANGELOG
 
 
+## v4.0.1 (2025-01-20)
+
+### Continuous Integration
+
+* ci: update deps ([`9524c28`](https://github.com/megalus/django-github-sso/commit/9524c2836e438e45131dd6289d157cd0bbe9b81f))
+
+### Fixes
+
+* fix: error when github user does not have name @dqd ([`dbea88a`](https://github.com/megalus/django-github-sso/commit/dbea88ae1ae2158fdb65efe96da50a8d91b95472))
+
+* fix: AttributeError 'NoneType' object has no attribute 'split' ([`a722816`](https://github.com/megalus/django-github-sso/commit/a722816078348603d0d35816c9eb320068d3589e))
+
+### Unknown
+
+* Merge pull request #5 from megalus/develop
+
+Fix Name Error ([`ac1c80d`](https://github.com/megalus/django-github-sso/commit/ac1c80d2c97410da7b2857018f3e2d6950cabb0f))
+
+* Merge pull request #4 from dqd/main
+
+fix: AttributeError 'NoneType' object has no attribute 'split' ([`f584770`](https://github.com/megalus/django-github-sso/commit/f58477008b7c56383b1387db3e49a1a809687e60))
+
+
 ## v4.0.0 (2024-10-09)
 
 ### Breaking
