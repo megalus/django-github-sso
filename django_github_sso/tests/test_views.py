@@ -230,3 +230,19 @@ def test_missing_user_login(client_with_session, settings, callback_url, github_
     assert User.objects.count() == 0
     assert response.url == "/admin/"
     assert response.wsgi_request.user.is_authenticated is False
+
+
+def test_new_user_without_name(client_with_session, callback_url, github_mock_no_name):
+    # Arrange
+    User.objects.all().delete()
+    assert User.objects.count() == 0
+    importlib.reload(conf)
+
+    # Act
+    response = client_with_session.get(callback_url)
+
+    # Assert
+    assert response.status_code == 302
+    assert User.objects.count() == 1
+    assert response.url == SECRET_PATH
+    assert response.wsgi_request.user.is_authenticated is True

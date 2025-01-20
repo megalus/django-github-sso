@@ -120,6 +120,46 @@ def github_mock(auth_user_mock):
 
 
 @pytest.fixture
+def member_data_mock_no_name():
+    member_data_mock = MagicMock(NamedUser)
+    member_data_mock.name = None
+    member_data_mock.id = 12345
+    member_data_mock.login = "spiderman"
+    member_data_mock.avatar_url = "https://avatars.githubusercontent.com/u/12345?v=4"
+    return member_data_mock
+
+
+@pytest.fixture
+def org_data_mock_no_name(member_data_mock_no_name):
+    org_data_mock = MagicMock(Organization)
+    org_data_mock.name = "example"
+    org_data_mock.get_members.return_value = [member_data_mock_no_name]
+    return org_data_mock
+
+
+@pytest.fixture
+def auth_user_mock_no_name(
+    org_data_mock_no_name, email_data_mock, repo_data_mock, member_data_mock_no_name
+):
+    auth_user_mock = MagicMock(AuthenticatedUser)
+    auth_user_mock.name = member_data_mock_no_name.name
+    auth_user_mock.id = member_data_mock_no_name.id
+    auth_user_mock.login = member_data_mock_no_name.login
+    auth_user_mock.avatar_url = member_data_mock_no_name.avatar_url
+    auth_user_mock.get_orgs.return_value = [org_data_mock_no_name]
+    auth_user_mock.get_emails.return_value = [email_data_mock]
+    auth_user_mock.get_repos.return_value = [repo_data_mock]
+    return auth_user_mock
+
+
+@pytest.fixture
+def github_mock_no_name(auth_user_mock_no_name):
+    github_mock = MagicMock(Github)
+    github_mock.get_user.return_value = auth_user_mock_no_name
+    return github_mock
+
+
+@pytest.fixture
 def updated_github_mocks(github_mock, auth_user_mock):
     g = deepcopy(github_mock)
     u = deepcopy(auth_user_mock)
