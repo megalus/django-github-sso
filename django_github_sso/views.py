@@ -15,7 +15,7 @@ from django_github_sso.utils import send_message
 
 @require_http_methods(["GET"])
 def start_login(request: HttpRequest) -> HttpResponseRedirect:
-    auth = GithubAuth(request)
+    github_auth = GithubAuth(request)
     # Get the next url
     next_param = request.GET.get(key="next")
     if next_param:
@@ -25,18 +25,17 @@ def start_login(request: HttpRequest) -> HttpResponseRedirect:
             else f"//{next_param}"
         )
     else:
-        next_url = auth.get_sso_value("next_url")
+        next_url = github_auth.get_sso_value("next_url")
         clean_param = reverse(next_url)
     next_path = urlparse(clean_param).path
 
-    github_auth = GithubAuth(request)
     auth_url, state = github_auth.get_auth_info()
 
     # Save data on Session
     if not request.session.session_key:
         request.session.create()
 
-    timeout = auth.get_sso_value("timeout")
+    timeout = github_auth.get_sso_value("timeout")
     request.session.set_expiry(timeout * 60)
 
     request.session["sso_state"] = state
