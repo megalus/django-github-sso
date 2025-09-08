@@ -1,12 +1,10 @@
-import importlib
-
 import pytest
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.models import User
 from django.contrib.messages import get_messages
 from django.urls import reverse
+from settings import get_sso_config
 
-from django_github_sso import conf
 from django_github_sso.tests.conftest import SECRET_PATH
 
 ROUTE_NAME = "django_github_sso:oauth_callback"
@@ -40,10 +38,11 @@ def test_start_login_none_next_param(client, github_mock):
     # Act
     url = reverse("django_github_sso:oauth_start_login")
     response = client.get(url)
+    next_url = get_sso_config(response.wsgi_request).get("next_url")
 
     # Assert
     assert response.status_code == 302
-    assert client.session["sso_next_url"] == reverse(conf.GITHUB_SSO_NEXT_URL)
+    assert client.session["sso_next_url"] == reverse(next_url)
 
 
 @pytest.mark.parametrize(
@@ -70,10 +69,7 @@ def test_exploit_redirect(client, github_mock, test_parameter):
 
 def test_github_sso_disabled(settings, client):
     # Arrange
-    from django_github_sso import conf
-
     settings.GITHUB_SSO_ENABLED = False
-    importlib.reload(conf)
 
     # Act
     response = client.get(reverse(ROUTE_NAME))
@@ -87,9 +83,6 @@ def test_github_sso_disabled(settings, client):
 
 
 def test_missing_code(client):
-    # Arrange
-    importlib.reload(conf)
-
     # Act
     response = client.get(reverse(ROUTE_NAME))
 
@@ -104,7 +97,6 @@ def test_missing_code(client):
 @pytest.mark.parametrize("querystring", ["?code=1234", "?code=1234&state=bad_dog"])
 def test_bad_state(client, querystring):
     # Arrange
-    importlib.reload(conf)
     session = client.session
     session.update({"sso_state": "good_dog"})
     session.save()
@@ -125,10 +117,7 @@ def test_invalid_email(
     client_with_session, settings, callback_url, github_mock, email_data_mock
 ):
     # Arrange
-    from django_github_sso import conf
-
     settings.GITHUB_SSO_ALLOWABLE_DOMAINS = ["foobar.com"]
-    importlib.reload(conf)
 
     # Act
     response = client_with_session.get(callback_url)
@@ -164,11 +153,20 @@ def test_inactive_user(
     assert User.objects.get(email=email_data_mock.email).is_active is False
 
 
-def test_new_user_login(client_with_session, callback_url, github_mock):
+@pytest.mark.parametrize(
+    "allowable_domains",
+    [
+        ["dailybugle.info"],
+        ["*"],
+    ],
+)
+def test_new_user_login(
+    client_with_session, callback_url, github_mock, settings, allowable_domains
+):
     # Arrange
+    settings.GITHUB_SSO_ALLOWABLE_DOMAINS = allowable_domains
     User.objects.all().delete()
     assert User.objects.count() == 0
-    importlib.reload(conf)
 
     # Act
     response = client_with_session.get(callback_url)
@@ -189,8 +187,6 @@ def test_existing_user_login(
     callback_url,
 ):
     # Arrange
-    from django_github_sso import conf
-
     existing_user, _ = User.objects.update_or_create(
         username=auth_user_mock.login,
         email=email_data_mock.email,
@@ -202,7 +198,6 @@ def test_existing_user_login(
     )
 
     settings.GITHUB_SSO_AUTO_CREATE_USERS = False
-    importlib.reload(conf)
 
     # Act
     response = client_with_session.get(callback_url)
@@ -217,10 +212,7 @@ def test_existing_user_login(
 
 def test_missing_user_login(client_with_session, settings, callback_url, github_mock):
     # Arrange
-    from django_github_sso import conf
-
     settings.GITHUB_SSO_AUTO_CREATE_USERS = False
-    importlib.reload(conf)
 
     # Act
     response = client_with_session.get(callback_url)
@@ -228,7 +220,7 @@ def test_missing_user_login(client_with_session, settings, callback_url, github_
     # Assert
     assert response.status_code == 302
     assert User.objects.count() == 0
-    assert response.url == "/admin/"
+    assert response.url == "/"
     assert response.wsgi_request.user.is_authenticated is False
 
 
@@ -236,7 +228,6 @@ def test_new_user_without_name(client_with_session, callback_url, github_mock_no
     # Arrange
     User.objects.all().delete()
     assert User.objects.count() == 0
-    importlib.reload(conf)
 
     # Act
     response = client_with_session.get(callback_url)

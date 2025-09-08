@@ -57,6 +57,12 @@ Full documentation is available at: [https://megalus.github.io/django-github-sso
 $ pip install django-github-sso
 ```
 
+> **Compatibility**
+> - Python 3.11, 3.12, 3.13
+> - Django 4.2, 5.0, 5.1, 5.2
+>
+> Older python/django versions are not supported.
+
 ### Quick Configuration
 
 1. Add the following to your `settings.py` `INSTALLED_APPS`:
@@ -134,16 +140,11 @@ GITHUB_SSO_CLIENT_ID = os.environ.get("GITHUB_SSO_CLIENT_ID")
 GITHUB_SSO_CLIENT_SECRET = os.environ.get("GITHUB_SSO_CLIENT_SECRET")
 ```
 
-### Troubleshooting
+## Example project
 
-If you encounter issues, check the [troubleshooting guide](https://megalus.github.io/django-github-sso/troubleshooting/) in the documentation.
-
-Common issues include:
-- State mismatch errors (check browser session cookies)
-- User authorization failures (check your filter settings)
-- Login loops (enable error messages with `GITHUB_SSO_SHOW_FAILED_LOGIN_MESSAGE = True`)
-
-For more help, see the [example app](https://github.com/megalus/django-github-sso/tree/main/example_github_app) or open an [issue](https://github.com/megalus/django-github-sso/issues).
+A minimal Django project using this library is included in this repository under `example_github_app/`.
+- Read the step-by-step instructions in example_github_app/README.md
+- Use it as a reference to configure your own project settings and URLs
 
 ---
 

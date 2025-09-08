@@ -4,7 +4,7 @@
 
 ??? question "Admin Message: _**State Mismatched. Time expired?**_"
     This error occurs when the user is redirected to the Google login page and then returns to the Django login page but
-    original state are not found. Please check if the browser has the anonymous session created by Django.
+    original state are not found or session was expired. Please check if the browser has the anonymous session created by Django.
 
 ??? question "Admin Message: _**User not allowed to login**_"
     Please check your filters, some combinations can filter all users. Use the option `GITHUB_SSO_SHOW_ADDITIONAL_ERROR_MESSAGES`
@@ -17,6 +17,15 @@
     This is because the user data was received from GitHub, but the user was not created in the database or is not active.
     To see these errors please check the logs or enable the option `GITHUB_SSO_SHOW_FAILED_LOGIN_MESSAGE` to see failed
     login messages on browser. Please, make note these messages can be used on exploit attacks.
+
+??? question "When I config a custom Authentication Backend using GITHUB_SSO_AUTHENTICATION_BACKEND, the lib stops to login, without errors or logs."
+    This is because the value of `GITHUB_SSO_AUTHENTICATION_BACKEND` is not a valid authentication backend import path.
+    Please check the value of this setting and make sure it is a valid import path to a Django authentication backend.
+
+??? question "When using one package for Admin and another for Pages, the user can enter in Admin, even if I configure the Pages SSO to not give any admin rights"
+    Please check if the user is not already a staff or superuser in the database, especially if you're using the
+    `MICROSOFT_SSO_UNIQUE_EMAIL` and `GITHUB_SSO_UNIQUE_EMAIL` options. If the user is already a staff or superuser,
+    he will be able to enter in Admin, even if the SSO package for Pages does not give him any admin rights.
 
 ??? question "Got a "KeyError: 'NAME'" error after set SSO_USE_ALTERNATE_W003"
     If you get a `KeyError: 'NAME'` error, please set a `NAME` in `TEMPLATES` at `settings.py`:
