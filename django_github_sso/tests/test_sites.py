@@ -21,6 +21,9 @@ def test_per_site_configuration(
 
     # Act
     response = client_with_session.get("/", HTTP_HOST=path)
+    response_text = (
+        response.text if hasattr(response, "text") else response.content.decode()
+    )
 
     # Assert
-    assert TEST_SITE_SETTINGS[path]["text"] in response.text
+    assert TEST_SITE_SETTINGS[path]["text"] in response_text

@@ -19,9 +19,12 @@ def test_value_from_conf(client_with_session, settings, value, expected):
 
     # Act
     response = client_with_session.get("/")
+    response_text = (
+        response.text if hasattr(response, "text") else response.content.decode()
+    )
 
     # Assert
-    assert expected in response.text
+    assert expected in response_text
 
 
 @pytest.mark.parametrize(
@@ -52,11 +55,21 @@ def test_is_admin_path(client_with_session, settings):
 
     # Act
     response_admin = client_with_session.get("/admin/login", follow=True)
+    response_admin_text = (
+        response_admin.text
+        if hasattr(response_admin, "text")
+        else response_admin.content.decode()
+    )
     response_page = client_with_session.get("/", follow=True)
+    response_page_text = (
+        response_page.text
+        if hasattr(response_page, "text")
+        else response_page.content.decode()
+    )
 
     # Assert
-    assert "Sign in with GitHub" in response_admin.text
-    assert "Sign in with GitHub" not in response_page.text
+    assert "Sign in with GitHub" in response_admin_text
+    assert "Sign in with GitHub" not in response_page_text
 
 
 def test_is_page_path(client_with_session, settings):
@@ -68,11 +81,21 @@ def test_is_page_path(client_with_session, settings):
 
     # Act
     response_admin = client_with_session.get("/admin/login", follow=True)
+    response_admin_text = (
+        response_admin.text
+        if hasattr(response_admin, "text")
+        else response_admin.content.decode()
+    )
     response_page = client_with_session.get("/", follow=True)
+    response_page_text = (
+        response_page.text
+        if hasattr(response_page, "text")
+        else response_page.content.decode()
+    )
 
     # Assert
-    assert "Sign in with GitHub" not in response_admin.text
-    assert "Sign in with GitHub" in response_page.text
+    assert "Sign in with GitHub" not in response_admin_text
+    assert "Sign in with GitHub" in response_page_text
 
 
 def test_pages_login_not_allowed(client_with_session, settings, callback_url):
