@@ -6,10 +6,14 @@
 
 {% block extrastyle %}
     {{ block.super }}
-    {% define_sso_providers as sso_providers %}
-    {% for provider in sso_providers %}
-        <link rel="stylesheet" href="{{ provider.css_url }}">
-    {% endfor %}
+    {% with sso_providers|default:None as sso_providers %}
+        {% if sso_providers is None %}
+            {% define_sso_providers as sso_providers %}
+        {% endif %}
+        {% for provider in sso_providers %}
+            <link rel="stylesheet" href="{{ provider.css_url }}">
+        {% endfor %}
+    {% endwith %}
 {% endblock %}
 
 {# Default Django Admin Block #}

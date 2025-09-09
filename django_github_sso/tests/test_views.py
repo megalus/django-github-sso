@@ -3,9 +3,9 @@ from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.models import User
 from django.contrib.messages import get_messages
 from django.urls import reverse
-from settings import get_sso_config
 
 from django_github_sso.tests.conftest import SECRET_PATH
+from example_github_app.settings import get_sso_config
 
 ROUTE_NAME = "django_github_sso:oauth_callback"
 

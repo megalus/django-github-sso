@@ -56,9 +56,9 @@ INSTALLED_APPS = [
     "django.contrib.messages",  # Need for Auth messages
     "django.contrib.staticfiles",
     "django.contrib.sites",  # Optional: Add Sites framework
-    "django_github_sso",  # Add django_github_sso
     "django_google_sso",  # Add django_google_sso
     "django_microsoft_sso",  # Add django_github_sso
+    "django_github_sso",  # Add django_github_sso
 ]
 
 MIDDLEWARE = [
