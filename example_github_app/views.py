@@ -61,22 +61,25 @@ def microsoft_slo_view(request: HttpRequest) -> HttpResponseBase:
 
     """
     # Logout from Microsoft
-    auth = MicrosoftAuth(request)
-    slo_enabled = auth.get_sso_value("SLO_ENABLED")
-    sso_enabled = auth.get_sso_value("ENABLED")
+    try:
+        auth = MicrosoftAuth(request)
+        slo_enabled = auth.get_sso_value("SLO_ENABLED")
+        sso_enabled = auth.get_sso_value("ENABLED")
 
-    if slo_enabled and sso_enabled:
-        microsoft = MicrosoftAuth(request)
-        logout_redirect_path = auth.get_sso_value("LOGOUT_REDIRECT_PATH")
-        homepage = resolve_url(logout_redirect_path)
-        if not homepage.startswith("http"):
-            homepage = request.build_absolute_uri(homepage)
-        next_page = microsoft.get_logout_url(homepage=homepage)
-        return LogoutView.as_view(next_page=next_page)(request)
+        if slo_enabled and sso_enabled:
+            microsoft = MicrosoftAuth(request)
+            logout_redirect_path = auth.get_sso_value("LOGOUT_REDIRECT_PATH")
+            homepage = resolve_url(logout_redirect_path)
+            if not homepage.startswith("http"):
+                homepage = request.build_absolute_uri(homepage)
+            next_page = microsoft.get_logout_url(homepage=homepage)
+            return LogoutView.as_view(next_page=next_page)(request)
+    except Exception as e:
+        logger.error(f"Error during Microsoft SLO process: {e}")
 
     redirect_url = (
         reverse("admin:index")
-        if request.path.startswith("admin:index")
+        if request.path.startswith(reverse("admin:index"))
         else reverse("index")
     )
 
