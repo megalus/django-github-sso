@@ -12,7 +12,7 @@ def register_sso_check(app_configs, **kwargs):
     but filtering out the TEMPLATE_TAG_NAMES from this library.
 
     Django will raise this warning if you're installed more than one SSO provider,
-    like django_github_sso and django_google_sso.
+    like django_google_sso and django_microsoft_sso.
 
     To silence any E003/W003 warning, you can add the following to your settings.py:
     SILENCED_SYSTEM_CHECKS = ["templates.W003"]  # or templates.E003 for Django<=5.1
@@ -48,10 +48,7 @@ def register_sso_check(app_configs, **kwargs):
 
         for config in app_configs:
             for engine in settings.TEMPLATES:
-                if (
-                    engine["BACKEND"]
-                    == "django.template.backends.django.DjangoTemplates"
-                ):
+                if engine["BACKEND"] == "django.template.backends.django.DjangoTemplates":
                     engine_params = engine.copy()
                     engine_params.pop("BACKEND")
                     django_engine = DjangoTemplates(engine_params)

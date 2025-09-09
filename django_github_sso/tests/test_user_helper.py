@@ -1,9 +1,7 @@
-import importlib
 from copy import deepcopy
 
 import pytest
 
-from django_github_sso import conf
 from django_github_sso.main import UserHelper
 from django_github_sso.models import User
 
@@ -32,7 +30,6 @@ def test_email_is_valid(
 ):
     # Arrange
     settings.GITHUB_SSO_ALLOWABLE_DOMAINS = allowable_domains
-    importlib.reload(conf)
 
     # Act
     helper = UserHelper(github_mock, auth_user_mock, callback_request)
@@ -47,7 +44,6 @@ def test_get_or_create_user(
 ):
     # Arrange
     settings.GITHUB_SSO_AUTO_CREATE_FIRST_SUPERUSER = auto_create_super_user
-    importlib.reload(conf)
 
     # Act
     helper = UserHelper(github_mock, auth_user_mock, callback_request)
@@ -73,7 +69,6 @@ def test_get_or_create_user_with_no_name(
 ):
     # Arrange
     settings.GITHUB_SSO_AUTO_CREATE_FIRST_SUPERUSER = auto_create_super_user
-    importlib.reload(conf)
 
     # Act
     helper = UserHelper(github_mock, auth_user_mock_no_name, callback_request)
@@ -105,7 +100,7 @@ def test_update_existing_user_record_for_different_emails(
     User.objects.all().delete()
     settings.GITHUB_SSO_ALWAYS_UPDATE_USER_DATA = always_update_user_data
     settings.GITHUB_SSO_UNIQUE_EMAIL = False
-    importlib.reload(conf)
+
     helper = UserHelper(github_mock, auth_user_mock, callback_request)
     helper.get_or_create_user()
     user = helper.get_or_create_user()
@@ -130,7 +125,6 @@ def test_add_all_users_to_staff_list(
     settings.GITHUB_SSO_STAFF_LIST = ["*"]
     settings.GITHUB_SSO_AUTO_CREATE_FIRST_SUPERUSER = False
     settings.GITHUB_SSO_CALLBACK_DOMAIN = "localhost:8000"
-    importlib.reload(conf)
 
     emails = [
         faker.email(),
@@ -164,7 +158,6 @@ def test_create_staff_from_list(
     settings.GITHUB_SSO_AUTO_CREATE_FIRST_SUPERUSER = False
     settings.GITHUB_SSO_STAFF_LIST = [email_data_mock.email]
     settings.GITHUB_SSO_CALLBACK_DOMAIN = "localhost:8000"
-    importlib.reload(conf)
     User.objects.all().delete()
 
     # Act
@@ -184,7 +177,6 @@ def test_create_super_user_from_list(
     settings.GITHUB_SSO_AUTO_CREATE_FIRST_SUPERUSER = False
     settings.GITHUB_SSO_SUPERUSER_LIST = [email_data_mock.email]
     settings.GITHUB_SSO_CALLBACK_DOMAIN = "localhost:8000"
-    importlib.reload(conf)
     User.objects.all().delete()
 
     # Act

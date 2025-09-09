@@ -1,11 +1,17 @@
 import importlib
 from copy import deepcopy
+from typing import Generator
 from unittest.mock import MagicMock
 from urllib.parse import quote, urlencode
 
 import pytest
+from django.apps import apps
+from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.messages.storage.fallback import FallbackStorage
 from django.contrib.sessions.middleware import SessionMiddleware
+from django.contrib.sites.models import Site
+from django.db import connection, models
+from django.test import AsyncClient
 from django.urls import reverse
 from github import Github
 from github.AuthenticatedUser import AuthenticatedUser, EmailData
@@ -13,7 +19,9 @@ from github.NamedUser import NamedUser
 from github.Organization import Organization
 from github.Repository import Repository
 
-from django_github_sso import conf, views
+from django_github_sso import conf
+from django_github_sso import conf as conf_module
+from django_github_sso import views
 from django_github_sso.main import GithubAuth
 
 SECRET_PATH = "/secret/"
@@ -186,11 +194,10 @@ def client_with_session(
 ):
     settings.GITHUB_SSO_PRE_LOGIN_CALLBACK = "django_github_sso.hooks.pre_login_user"
     settings.GITHUB_SSO_PRE_CREATE_CALLBACK = "django_github_sso.hooks.pre_create_user"
-    settings.GITHUB_SSO_PRE_VALIDATE_CALLBACK = (
-        "django_github_sso.hooks.pre_validate_user"
-    )
+    settings.GITHUB_SSO_PRE_VALIDATE_CALLBACK = "django_github_sso.hooks.pre_validate_user"
     settings.GITHUB_SSO_ALLOWABLE_ORGS = ["example"]
     settings.GITHUB_SSO_NEEDED_REPOS = ["example/repo-a"]
+    settings.ALLOWED_HOSTS = ["testserver", "site.com", "other-site.com"]
     mocker.patch.object(
         GithubAuth, "get_user_token", return_value={"access_token": "12345"}
     )
@@ -204,5 +211,109 @@ def client_with_session(
 
 
 @pytest.fixture
+def aclient_with_session(client_with_session, settings):
+    """An alias for client_with_session to indicate async client usage."""
+    settings.SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
+    ac = AsyncClient()
+    ac.cookies.update(client_with_session.cookies)
+    return ac
+
+
+@pytest.fixture
 def callback_url(query_string):
     return f"{reverse('django_github_sso:oauth_callback')}?{query_string}"
+
+
+@pytest.fixture
+def default_site(settings):
+    site, _ = Site.objects.update_or_create(
+        id=1, defaults={"domain": "site.com", "name": "Default Site"}
+    )
+    settings.SITE_ID = site.id
+    return site
+
+
+@pytest.fixture
+def other_site(settings):
+    site, _ = Site.objects.get_or_create(
+        domain="other-site.com", defaults={"name": "Other Site"}
+    )
+    settings.SITE_ID = None
+    return site
+
+
+@pytest.fixture
+def custom_user_model(settings) -> Generator[type, None, None]:
+    """
+    Create a temporary custom user model, point AUTH_USER_MODEL to it,
+    recreate GitHubSSOUser table to reference the new model, yield the
+    custom user class and then fully restore the previous state.
+    """
+    # Capture previous state
+    old_auth = settings.AUTH_USER_MODEL
+    import django_github_sso.models as gt_models
+
+    old_githubssouser = gt_models.GitHubSSOUser
+
+    class CustomNamesUser(AbstractBaseUser):
+        user_name = models.CharField(max_length=150, unique=True)
+        mail = models.EmailField(unique=True)
+        is_staff = models.BooleanField(default=False)
+        is_active = models.BooleanField(default=True)
+
+        USERNAME_FIELD = "user_name"
+        EMAIL_FIELD = "mail"
+        REQUIRED_FIELDS = ["mail"]
+
+        class Meta:
+            app_label = "django_github_sso"
+
+        def __str__(self) -> str:
+            return self.user_name
+
+    # Register dynamic model and create its table
+    apps.register_model("django_github_sso", CustomNamesUser)
+    with connection.schema_editor() as schema_editor:
+        schema_editor.create_model(CustomNamesUser)
+
+    # Point to the new user model and reload conf + models so relations are rebuilt
+    settings.AUTH_USER_MODEL = "django_github_sso.CustomNamesUser"
+    importlib.reload(conf_module)
+    gt_models = importlib.reload(gt_models)
+
+    # Replace GitHubSSOUser DB table so its FK points to the new user model
+    new_githubssouser = gt_models.GitHubSSOUser
+    with connection.schema_editor() as schema_editor:
+        schema_editor.delete_model(old_githubssouser)
+        schema_editor.create_model(new_githubssouser)
+
+    importlib.reload(importlib.import_module("django_github_sso.main"))
+
+    try:
+        yield CustomNamesUser
+    finally:
+        # Teardown: remove new tables and restore original model/table
+        gt_models = importlib.reload(gt_models)
+        new_githubssouser = gt_models.GitHubSSOUser
+
+        with connection.schema_editor() as schema_editor:
+            # delete the GitHubSSOUser table that references the dynamic user
+            schema_editor.delete_model(new_githubssouser)
+            # delete the dynamic user table
+            schema_editor.delete_model(CustomNamesUser)
+
+        # restore AUTH_USER_MODEL and reload modules
+        settings.AUTH_USER_MODEL = old_auth
+        importlib.reload(conf_module)
+        importlib.reload(gt_models)
+
+        # recreate the original GitHubSSOUser table created by migrations
+        with connection.schema_editor() as schema_editor:
+            schema_editor.create_model(old_githubssouser)
+
+        # unregister the dynamic model from the apps registry and clear caches
+        app_models = apps.all_models.get("django_github_sso", {})
+        app_models.pop("customnamesuser", None)
+        apps.clear_cache()
+
+        importlib.reload(importlib.import_module("django_github_sso.main"))

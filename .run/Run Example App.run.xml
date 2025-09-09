@@ -19,10 +19,10 @@
       <option name="useCurrentConnection" value="false" />
     </EXTENSION>
     <option name="launchJavascriptDebuger" value="false" />
-    <option name="port" value="8010" />
+    <option name="port" value="8003" />
     <option name="host" value="localhost" />
     <option name="additionalOptions" value="" />
-    <option name="browserUrl" value="http://localhost:8010/secret" />
+    <option name="browserUrl" value="http://localhost:8003/admin" />
     <option name="runTestServer" value="false" />
     <option name="runNoReload" value="false" />
     <option name="useCustomRunCommand" value="false" />

@@ -22,11 +22,11 @@ def test_get_redirect_uri_with_http(callback_request, monkeypatch):
     current_site_domain = Site.objects.get_current().domain
 
     # Act
-    google = GithubAuth(callback_request)
+    github = GithubAuth(callback_request)
 
     # Assert
     assert (
-        google.get_redirect_uri()
+        github.get_redirect_uri()
         == f"{expected_scheme}://{current_site_domain}/github_sso/callback/"
     )
 
@@ -40,25 +40,21 @@ def test_get_redirect_uri_with_reverse_proxy(
     current_site_domain = Site.objects.get_current().domain
 
     # Act
-    google = GithubAuth(callback_request_from_reverse_proxy)
+    github = GithubAuth(callback_request_from_reverse_proxy)
 
     # Assert
     assert (
-        google.get_redirect_uri()
+        github.get_redirect_uri()
         == f"{expected_scheme}://{current_site_domain}/github_sso/callback/"
     )
 
 
-def test_redirect_uri_with_custom_domain(
-    callback_request_from_reverse_proxy, monkeypatch
-):
+def test_redirect_uri_with_custom_domain(callback_request_from_reverse_proxy, monkeypatch):
     # Arrange
     monkeypatch.setattr(conf, "GITHUB_SSO_CALLBACK_DOMAIN", "my-other-domain.com")
 
     # Act
-    google = GithubAuth(callback_request_from_reverse_proxy)
+    github = GithubAuth(callback_request_from_reverse_proxy)
 
     # Assert
-    assert (
-        google.get_redirect_uri() == "https://my-other-domain.com/github_sso/callback/"
-    )
+    assert github.get_redirect_uri() == "https://my-other-domain.com/github_sso/callback/"

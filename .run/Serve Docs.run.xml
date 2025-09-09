@@ -8,7 +8,7 @@
       <env name="PYTHONUNBUFFERED" value="1" />
     </envs>
     <option name="SDK_HOME" value="" />
-    <option name="SDK_NAME" value="Python 3.11.9 WSL (Ubuntu): (/home/chrismaille/.cache/pypoetry/virtualenvs/django-github-sso-LPlCb83T-py3.11/bin/python)" />
+    <option name="SDK_NAME" value="Python 3.12.11 WSL (Ubuntu): (/home/chrismaille/.cache/pypoetry/virtualenvs/django-github-sso-LPlCb83T-py3.12/bin/python)" />
     <option name="WORKING_DIRECTORY" value="\\wsl.localhost\Ubuntu\home\chrismaille\projects\django-github-sso" />
     <option name="IS_MODULE_SDK" value="false" />
     <option name="ADD_CONTENT_ROOTS" value="true" />

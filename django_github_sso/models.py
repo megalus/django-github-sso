@@ -16,14 +16,13 @@ class GitHubSSOUser(models.Model):
     def picture(self):
         if self.picture_url:
             return mark_safe(
-                '<img src = "{}" width="75" height="75">'.format(
-                    self.picture_url
-                )  # nosec
+                '<img src = "{}" width="75" height="75">'.format(self.picture_url)  # nosec
             )
         return None
 
     def __str__(self):
-        return f"{self.user.email} (@{self.user_name})"
+        user_email = getattr(self.user, User.get_email_field_name())
+        return f"{user_email} (@{self.user_name})"
 
     class Meta:
         db_table = "github_sso_user"
