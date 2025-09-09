@@ -1,6 +1,39 @@
 # CHANGELOG
 
 
+## v5.0.0 (2025-09-09)
+
+### Breaking
+
+* feat!: v5.0.0 - BREAKING CHANGE
+
+* Add support to Django 5.2
+* SSO configuration can be defined per request now
+* SSO Tags can be customized in views now.
+* Fix PEP 562 for django_github_sso.conf
+* Use Django's EMAIL_FIELD to determine email field in User ([`c36594f`](https://github.com/megalus/django-github-sso/commit/c36594f209da7d7d07689b75903710b323848261))
+
+### Chores
+
+* chore: fix from PR review ([`9b3c7f9`](https://github.com/megalus/django-github-sso/commit/9b3c7f9c28b4de3992a4c1d7d6b15e479ff0048a))
+
+* chore: fix unit tests in Django 4.2 ([`82cb391`](https://github.com/megalus/django-github-sso/commit/82cb39191ca69efd5e120cd2f61a870e03e0b0d9))
+
+* chore: fix unit tests ([`30b7572`](https://github.com/megalus/django-github-sso/commit/30b7572ce13c85a2e1a22cc19079afddbde35a46))
+
+* chore: PR review ([`6a8aa29`](https://github.com/megalus/django-github-sso/commit/6a8aa29bda394abf6284c1c1b2e7e506bdd2dff5))
+
+### Documentation
+
+* docs: add coding guidelines and update README with requirements and troubleshooting ([`85b62d1`](https://github.com/megalus/django-github-sso/commit/85b62d1a2bb57cd4ab43137fab0df5518ebd4cde))
+
+### Unknown
+
+* Merge pull request #6 from megalus/develop
+
+Version 5.0 ([`431c0b9`](https://github.com/megalus/django-github-sso/commit/431c0b9740087a32fd4f92a105cb57f3428cf8ac))
+
+
 ## v4.0.1 (2025-01-20)
 
 ### Continuous Integration
