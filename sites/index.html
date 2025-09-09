@@ -11,8 +11,10 @@
       
       
       
-        <link rel="prev" href="../troubleshooting/">
+        <link rel="prev" href="../multiple/">
       
+      
+        <link rel="next" href="../pages/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -20,7 +22,7 @@
     
     
       
-        <title>Thank you - Django GitHub SSO</title>
+        <title>Using Django Sites Framework - Django GitHub SSO</title>
       
     
     
@@ -72,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#thank-you" class="md-skip">
+        <a href="#using-django-sites-framework" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Thank you
+              Using Django Sites Framework
             
           </span>
         </div>
@@ -515,10 +517,32 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../sites/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Using Django Sites Framework
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -529,6 +553,53 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How It Works
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-complete-site-specific-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example: Complete Site-Specific Configuration
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -603,32 +674,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Thank you
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../thanks/" class="md-nav__link">
         
   
   
@@ -639,35 +688,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#donating" class="md-nav__link">
-    <span class="md-ellipsis">
-      Donating
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -699,9 +719,27 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#donating" class="md-nav__link">
+  <a href="#how-it-works" class="md-nav__link">
     <span class="md-ellipsis">
-      Donating
+      How It Works
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-complete-site-specific-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example: Complete Site-Specific Configuration
     </span>
   </a>
   
@@ -726,21 +764,107 @@
   
 
 
-<h1 id="thank-you">Thank you<a class="headerlink" href="#thank-you" title="Permanent link">&para;</a></h1>
-<p>Thank you for using this project. And for all the appreciation, patience and support.</p>
-<p>I really hope this project can make your life a little easier.</p>
-<p>Please feel free to check our other projects:</p>
+<h1 id="using-django-sites-framework">Using Django Sites Framework<a class="headerlink" href="#using-django-sites-framework" title="Permanent link">&para;</a></h1>
+<p>Django GitHub SSO now supports the <a href="https://docs.djangoproject.com/en/stable/ref/contrib/sites/">Django Sites Framework</a>, allowing you to have different SSO configurations for different sites in your Django project.</p>
+<h2 id="how-it-works">How It Works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h2>
+<p>Most configuration settings in Django GitHub SSO can now accept either a direct value or a callable function that receives the current request and returns the appropriate value for the current site.</p>
+<p>This means you can dynamically determine configuration values based on the current site being accessed, enabling scenarios like:</p>
 <ul>
-<li><a href="https://github.com/megalus/stela">stela</a>: Easily manage project settings and secrets in any python project.</li>
-<li><a href="https://github.com/megalus/django-google-sso">django-google-sso</a>: A Django app to enable Single Sign-On with Google Accounts.</li>
-<li><a href="https://github.com/megalus/django-microsoft-sso">django-microsoft-sso</a>: A Django app to enable Single Sign-On with Microsoft 365 Accounts.</li>
-<li><a href="https://github.com/megalus/django-github-sso">django-github-sso</a>: A Django app to enable Single Sign-On with GitHub Accounts.</li>
+<li>Different GitHub OAuth credentials per site</li>
+<li>Different user creation policies per site</li>
+<li>Different session timeouts per site</li>
+<li>And more!</li>
 </ul>
-<h2 id="donating">Donating<a class="headerlink" href="#donating" title="Permanent link">&para;</a></h2>
-<p>If you like to finance this project, please consider donating:</p>
-<script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="megalus" data-color="#FFDD00" data-emoji=""  data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
-
-<p><img src="https://media.giphy.com/media/hXMGQqJFlIQMOjpsKC/giphy.gif" width="250"/></p>
+<h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h2>
+<ol>
+<li>First, ensure the Django Sites Framework is properly configured in your project:</li>
+</ol>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># settings.py</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">[</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="c1"># ...</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="s1">&#39;django.contrib.sites&#39;</span><span class="p">,</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="s1">&#39;django_github_sso&#39;</span><span class="p">,</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="c1"># ...</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="p">]</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">SITE_ID</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># Default site ID</span>
+</span></code></pre></div>
+<ol>
+<li>
+<p>Create your sites in the Django admin or via migrations.</p>
+</li>
+<li>
+<p>Configure Django GitHub SSO settings as callables that return different values based on the current site:</p>
+</li>
+</ol>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># settings.py</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">from</span> <span class="nn">django.contrib.sites.shortcuts</span> <span class="kn">import</span> <span class="n">get_current_site</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="k">def</span> <span class="nf">get_client_id</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Return different client ID based on the current site.&quot;&quot;&quot;</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="n">site</span> <span class="o">=</span> <span class="n">get_current_site</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    <span class="c1"># Map site domains to client IDs</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    <span class="n">client_ids</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>        <span class="s1">&#39;site.com&#39;</span><span class="p">:</span> <span class="s1">&#39;client-id-for-example-com&#39;</span><span class="p">,</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>        <span class="s1">&#39;other-site.com&#39;</span><span class="p">:</span> <span class="s1">&#39;client-id-for-other-site&#39;</span><span class="p">,</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    <span class="p">}</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>    <span class="k">return</span> <span class="n">client_ids</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">site</span><span class="o">.</span><span class="n">domain</span><span class="p">,</span> <span class="s1">&#39;default-client-id&#39;</span><span class="p">)</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="c1"># Configure settings as callables</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="n">GITHUB_SSO_CLIENT_ID</span> <span class="o">=</span> <span class="n">get_client_id</span>
+</span></code></pre></div>
+<h2 id="example-complete-site-specific-configuration">Example: Complete Site-Specific Configuration<a class="headerlink" href="#example-complete-site-specific-configuration" title="Permanent link">&para;</a></h2>
+<p>Here's a more comprehensive example showing how to configure multiple settings per site:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># settings.py</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">from</span> <span class="nn">django.contrib.sites.shortcuts</span> <span class="kn">import</span> <span class="n">get_current_site</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="k">def</span> <span class="nf">get_site_config</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">config_key</span><span class="p">):</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Get site-specific configuration.&quot;&quot;&quot;</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    <span class="n">site</span> <span class="o">=</span> <span class="n">get_current_site</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    <span class="c1"># Define configurations for each site</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>    <span class="n">site_configs</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>        <span class="s1">&#39;site.com&#39;</span><span class="p">:</span> <span class="p">{</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>            <span class="s1">&#39;client_id&#39;</span><span class="p">:</span> <span class="s1">&#39;client-id-for-example-com&#39;</span><span class="p">,</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>            <span class="s1">&#39;client_secret&#39;</span><span class="p">:</span> <span class="s1">&#39;secret-for-example-com&#39;</span><span class="p">,</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>            <span class="s1">&#39;project_id&#39;</span><span class="p">:</span> <span class="s1">&#39;project-id-for-example-com&#39;</span><span class="p">,</span>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>            <span class="s1">&#39;auto_create_users&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>            <span class="s1">&#39;session_cookie_age&#39;</span><span class="p">:</span> <span class="mi">3600</span><span class="p">,</span>  <span class="c1"># 1 hour</span>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>            <span class="s1">&#39;allowable_domains&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;example.com&#39;</span><span class="p">,</span> <span class="s1">&#39;example.org&#39;</span><span class="p">],</span>
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>        <span class="p">},</span>
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>        <span class="s1">&#39;other-site.com&#39;</span><span class="p">:</span> <span class="p">{</span>
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>            <span class="s1">&#39;client_id&#39;</span><span class="p">:</span> <span class="s1">&#39;client-id-for-other-site&#39;</span><span class="p">,</span>
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>            <span class="s1">&#39;client_secret&#39;</span><span class="p">:</span> <span class="s1">&#39;secret-for-other-site&#39;</span><span class="p">,</span>
+</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>            <span class="s1">&#39;project_id&#39;</span><span class="p">:</span> <span class="s1">&#39;project-id-for-other-site&#39;</span><span class="p">,</span>
+</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>            <span class="s1">&#39;auto_create_users&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+</span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>            <span class="s1">&#39;session_cookie_age&#39;</span><span class="p">:</span> <span class="mi">86400</span><span class="p">,</span>  <span class="c1"># 24 hours</span>
+</span><span id="__span-2-24"><a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>            <span class="s1">&#39;allowable_domains&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;other-site.com&#39;</span><span class="p">],</span>
+</span><span id="__span-2-25"><a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>        <span class="p">}</span>
+</span><span id="__span-2-26"><a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>    <span class="p">}</span>
+</span><span id="__span-2-27"><a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a>
+</span><span id="__span-2-28"><a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a>    <span class="c1"># Get config for current site, or use defaults</span>
+</span><span id="__span-2-29"><a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a>    <span class="n">site_config</span> <span class="o">=</span> <span class="n">site_configs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">site</span><span class="o">.</span><span class="n">domain</span><span class="p">,</span> <span class="p">{})</span>
+</span><span id="__span-2-30"><a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a>    <span class="k">return</span> <span class="n">site_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">config_key</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</span><span id="__span-2-31"><a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a>
+</span><span id="__span-2-32"><a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a><span class="c1"># Configure settings as callables</span>
+</span><span id="__span-2-33"><a id="__codelineno-2-33" name="__codelineno-2-33" href="#__codelineno-2-33"></a><span class="n">GITHUB_SSO_CLIENT_ID</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">request</span><span class="p">:</span> <span class="n">get_site_config</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;client_id&#39;</span><span class="p">)</span>
+</span><span id="__span-2-34"><a id="__codelineno-2-34" name="__codelineno-2-34" href="#__codelineno-2-34"></a><span class="n">GITHUB_SSO_CLIENT_SECRET</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">request</span><span class="p">:</span> <span class="n">get_site_config</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;client_secret&#39;</span><span class="p">)</span>
+</span><span id="__span-2-35"><a id="__codelineno-2-35" name="__codelineno-2-35" href="#__codelineno-2-35"></a><span class="n">GITHUB_SSO_PROJECT_ID</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">request</span><span class="p">:</span> <span class="n">get_site_config</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;project_id&#39;</span><span class="p">)</span>
+</span><span id="__span-2-36"><a id="__codelineno-2-36" name="__codelineno-2-36" href="#__codelineno-2-36"></a><span class="n">GITHUB_SSO_AUTO_CREATE_USERS</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">request</span><span class="p">:</span> <span class="n">get_site_config</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;auto_create_users&#39;</span><span class="p">)</span>
+</span><span id="__span-2-37"><a id="__codelineno-2-37" name="__codelineno-2-37" href="#__codelineno-2-37"></a><span class="n">GITHUB_SSO_SESSION_COOKIE_AGE</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">request</span><span class="p">:</span> <span class="n">get_site_config</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;session_cookie_age&#39;</span><span class="p">)</span>
+</span><span id="__span-2-38"><a id="__codelineno-2-38" name="__codelineno-2-38" href="#__codelineno-2-38"></a><span class="n">GITHUB_SSO_ALLOWABLE_DOMAINS</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">request</span><span class="p">:</span> <span class="n">get_site_config</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;allowable_domains&#39;</span><span class="p">)</span>
+</span></code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Unsupported Settings for Callables</p>
+<p><strong>All</strong> settings support callable configuration, <strong>except</strong> the following:</p>
+<ul>
+<li><code>GITHUB_SSO_ENABLED</code></li>
+<li><code>GITHUB_SSO_ENABLE_LOGS</code></li>
+<li><code>SSO_USE_ALTERNATE_W003</code></li>
+</ul>
+</div>
 
 
 
