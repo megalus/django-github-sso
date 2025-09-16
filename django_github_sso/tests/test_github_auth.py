@@ -58,3 +58,22 @@ def test_redirect_uri_with_custom_domain(callback_request_from_reverse_proxy, mo
 
     # Assert
     assert github.get_redirect_uri() == "https://my-other-domain.com/github_sso/callback/"
+
+
+def test_get_redirect_uri_from_multiple_reverse_proxies(rf, query_string, monkeypatch):
+    # Arrange
+    expected_scheme = "https"
+    monkeypatch.setattr(conf, "GITHUB_SSO_CALLBACK_DOMAIN", None)
+    current_site_domain = Site.objects.get_current().domain
+    request = rf.get(
+        f"/github_sso/callback/?{query_string}", HTTP_X_FORWARDED_PROTO="https, https"
+    )
+
+    # Act
+    github = GithubAuth(request)
+
+    # Assert
+    assert (
+        github.get_redirect_uri()
+        == f"{expected_scheme}://{current_site_domain}/github_sso/callback/"
+    )
