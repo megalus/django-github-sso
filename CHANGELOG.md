@@ -1,6 +1,13 @@
 # CHANGELOG
 
 
+## v5.0.2 (2025-09-16)
+
+### Fixes
+
+* fix: enhance redirect URI handling for multiple reverse proxies ([`fd2ffe6`](https://github.com/megalus/django-github-sso/commit/fd2ffe667c7a0d932d6f06d722f0e00d1cee9549))
+
+
 ## v5.0.1 (2025-09-15)
 
 ### Fixes
