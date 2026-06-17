@@ -189,6 +189,28 @@ def test_create_super_user_from_list(
     assert user.is_superuser is True
 
 
+def test_pre_create_user_return_full_args(
+    callback_request, settings, github_mock, auth_user_mock
+):
+    # Arrange
+    settings.GITHUB_SSO_PRE_CREATE_USER_RETURN_FULL_ARGS = True
+    extra_args = {
+        "username__iexact": "spiderman",
+        "defaults": {
+            "email": "peter@dailybugle.info",
+            "is_active": True,
+        },
+    }
+
+    # Act
+    helper = UserHelper(github_mock, auth_user_mock, callback_request)
+    user = helper.get_or_create_user(extra_args)
+
+    # Assert
+    assert user is not None
+    assert User.objects.count() == 1
+
+
 def test_duplicated_emails(github_mock, auth_user_mock, callback_request):
     # Arrange
     helper = UserHelper(github_mock, auth_user_mock, callback_request)

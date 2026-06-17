@@ -112,8 +112,7 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        "NAME": "django.contrib.auth.password_validation."
-        "UserAttributeSimilarityValidator",
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
         "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
@@ -206,7 +205,7 @@ GITHUB_SSO_CLIENT_SECRET = env.GITHUB_SSO_CLIENT_SECRET  # Static
 
 # --8<-- [start:sso_config]
 # settings.py
-from django_github_sso.helpers import is_admin_path
+from django_github_sso.helpers import is_admin_path  # noqa: E402
 
 
 def get_sso_config(request):
@@ -246,7 +245,7 @@ def get_sso_config(request):
 
 GITHUB_SSO_ALLOWABLE_DOMAINS = lambda request: get_sso_config(request)["allowable_domains"]
 GITHUB_SSO_ALLOWABLE_ORGS = lambda request: get_sso_config(request)["allowable_orgs"]
-GITHUB_SSO_NEEDED_REPOS = lambda request: get_sso_config(request)["needed_repos"]
+GITHUB_SSO_ALLOWABLE_REPOS = lambda request: get_sso_config(request)["needed_repos"]
 GITHUB_SSO_ALLOW_ALL_USERS = lambda request: get_sso_config(request)["allow_all_users"]
 GITHUB_SSO_AUTO_CREATE_FIRST_SUPERUSER = lambda request: get_sso_config(request)[
     "auto_create_first_superuser"
