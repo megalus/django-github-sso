@@ -167,14 +167,13 @@ This function will receive two arguments: the `github_user` instance and `reques
 !!! tip "You can add custom fields to the user model here"
 
     The `pre_create_callback` function can return a dictionary with the fields and values that will be passed to
-    `User.objects.create()` as the `defaults` argument. This means you can add custom fields to the user model here or
-    change default values for some fields, like `username`.
+    `User.objects.get_or_create()` as the `defaults` argument. This means you can add custom fields to the user model
+    here or change default values for some fields, like `username`.
 
     If not defined, the field `username` is always the Github Login name.
 
     You can't change the fields: `first_name`, `last_name`, `email` and `password` using this callback. These fields are
-    always passed to `User.objects.create()` with the values from Graph API and the password is always unusable.
-
+    always passed to `User.objects.get_or_create()` with the values from Graph API and the password is always unusable.
 
 ```python
 import arrow
@@ -197,6 +196,31 @@ def pre_create_callback(
         "date_joined": arrow.utcnow().shift(days=-1).datetime,
     }
 ```
+
+
+#### Full control with GITHUB_SSO_PRE_CREATE_USER_RETURN_FULL_ARGS
+
+If you set `GITHUB_SSO_PRE_CREATE_USER_RETURN_FULL_ARGS = True`, the dictionary returned by the callback is
+passed as **all kwargs** to `User.objects.get_or_create()` instead of only the `defaults` argument. This gives
+you full control over the lookup and creation arguments.
+
+For example, you can query by a different field:
+
+```python
+def pre_create_callback(github_user, request):
+    return {
+        "email__iexact": github_user.email,
+        "defaults": {
+            "username": github_user.login,
+            "is_active": True,
+        },
+    }
+```
+
+!!! warning "You are fully responsible for the get_or_create query"
+    When `GITHUB_SSO_PRE_CREATE_USER_RETURN_FULL_ARGS = True`, the auto-fill of `username` and `email` fields is
+    disabled. You must provide everything yourself, including the lookup filter. An empty dict will cause an error.
+
 
 ## Fine-tuning users before login
 

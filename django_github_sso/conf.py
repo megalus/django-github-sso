@@ -213,6 +213,12 @@ class GitHubSSOSettings:
         return self._get_setting("GITHUB_SSO_ENABLE_MESSAGES", True)
 
     @property
+    def GITHUB_SSO_PRE_CREATE_USER_RETURN_FULL_ARGS(self) -> bool:
+        return self._get_setting(
+            "GITHUB_SSO_PRE_CREATE_USER_RETURN_FULL_ARGS", False, accept_callable=False
+        )
+
+    @property
     def SSO_ADMIN_ROUTE(
         self,
     ) -> str | Callable[[HttpRequest], str]:

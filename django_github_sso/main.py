@@ -287,36 +287,42 @@ class UserHelper:
     def get_or_create_user(self, extra_users_args: dict | None = None):
         auth = GithubAuth(self.request)
         self.email_is_valid()
-        user_defaults = extra_users_args or {}
 
-        unique_email = auth.get_sso_value("unique_email")
-        if unique_email:
-            if self.username_field.name not in user_defaults:
-                user_defaults[self.username_field.name] = self.get_user_email()
-            user, created = self.user_model.objects.get_or_create(
-                **{
-                    f"{self.email_field_name}__iexact": self.get_user_email(),
-                    "defaults": user_defaults,
-                },
-            )
+        use_full_args = auth.get_sso_value("pre_create_user_return_full_args")
+
+        if use_full_args and extra_users_args:
+            user, created = self.user_model.objects.get_or_create(**extra_users_args)
         else:
-            query = self.user_model.objects.filter(
-                githubssouser__user_name__iexact=self.get_user_login()
-            )
-            if query.exists():
-                user = query.get()
-                created = False
-            else:
-                username = user_defaults.pop(
-                    self.username_field.name, self.get_user_login()
+            user_defaults = extra_users_args or {}
+
+            unique_email = auth.get_sso_value("unique_email")
+            if unique_email:
+                if self.username_field.name not in user_defaults:
+                    user_defaults[self.username_field.name] = self.get_user_email()
+                user, created = self.user_model.objects.get_or_create(
+                    **{
+                        f"{self.email_field_name}__iexact": self.get_user_email(),
+                        "defaults": user_defaults,
+                    },
                 )
-                create_query = {
-                    f"{self.username_field.attname}__iexact": username,
-                    "defaults": user_defaults,
-                }
-                if self.username_field.attname not in user_defaults:
-                    user_defaults[self.username_field.attname] = username
-                user, created = self.user_model.objects.get_or_create(**create_query)
+            else:
+                query = self.user_model.objects.filter(
+                    githubssouser__user_name__iexact=self.get_user_login()
+                )
+                if query.exists():
+                    user = query.get()
+                    created = False
+                else:
+                    username = user_defaults.pop(
+                        self.username_field.name, self.get_user_login()
+                    )
+                    create_query = {
+                        f"{self.username_field.attname}__iexact": username,
+                        "defaults": user_defaults,
+                    }
+                    if self.username_field.attname not in user_defaults:
+                        user_defaults[self.username_field.attname] = username
+                    user, created = self.user_model.objects.get_or_create(**create_query)
         self.check_first_super_user(user)
         self.check_for_update(created, user)
         if self.user_changed:

@@ -21,7 +21,12 @@ def pre_create_user(
         github_user: GitHub User Instance.
         request: HttpRequest object.
 
-    return: dict content to be passed to User.objects.create() as `defaults` argument.
+    return:
+        By default, dict content to be passed to User.objects.get_or_create()
+        as `defaults` argument.
+
+        When GITHUB_SSO_PRE_CREATE_USER_RETURN_FULL_ARGS is True, the dict
+        is passed as all kwargs to User.objects.get_or_create().
     """
     return {}
 
