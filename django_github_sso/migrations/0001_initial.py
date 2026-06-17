@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -15,17 +14,31 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='GitHubSSOUser',
+            name="GitHubSSOUser",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('github_id', models.CharField(blank=True, max_length=255, null=True)),
-                ('picture_url', models.URLField(max_length=2000)),
-                ('user_name', models.CharField(blank=True, max_length=255, null=True)),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("github_id", models.CharField(blank=True, max_length=255, null=True)),
+                ("picture_url", models.URLField(max_length=2000)),
+                ("user_name", models.CharField(blank=True, max_length=255, null=True)),
+                (
+                    "user",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'GitHub SSO User',
-                'db_table': 'github_sso_user',
+                "verbose_name": "GitHub SSO User",
+                "db_table": "github_sso_user",
             },
         ),
     ]
