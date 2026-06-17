@@ -1,6 +1,39 @@
 # CHANGELOG
 
 
+## v6.0.0 (2026-06-17)
+
+### Breaking
+
+* feat!: Remove django 4.2 support - BREAKING CHANGE ([`6e301b9`](https://github.com/megalus/django-github-sso/commit/6e301b933110e9415fb3d6753f4e3def001a1a84))
+
+### Chores
+
+* chore: Add django-microsoft-sso cache warning for non-shared cache backends
+
+Registered tags are the same for all django-xxx-sso libraries, to avoid hidden bugs when package load order is changed on settings. ([`5988778`](https://github.com/megalus/django-github-sso/commit/5988778f655eeab32624c428f4849405dc68f903))
+
+* chore: fix ruff format ([`26386a6`](https://github.com/megalus/django-github-sso/commit/26386a680c61ec336c55cb20fbfeb14c1e6b5475))
+
+### Documentation
+
+* docs: Update supported Python and Django versions in documentation ([`e7c1e46`](https://github.com/megalus/django-github-sso/commit/e7c1e46c5d17251f5aca372d63c7380c3a4d38c9))
+
+### Features
+
+* feat: Add full `get_or_create` control via `GITHUB_SSO_PRE_CREATE_USER_RETURN_FULL_ARGS`
+
+- Introduced the `GITHUB_SSO_PRE_CREATE_USER_RETURN_FULL_ARGS` setting for passing the entire dictionary as kwargs to `User.objects.get_or_create`.
+- Updated related logic, tests, and documentation.
+- Improved Makefile commands for consistency with `uv`. ([`5cdec5d`](https://github.com/megalus/django-github-sso/commit/5cdec5d455ee29325550fb3de809795c14a074d0))
+
+### Unknown
+
+* Merge pull request #7 from megalus/develop
+
+New Version: Add ruff, drop Django 4.2, add option GITHUB_SSO_PRE_CREATE_USER_RETURN_FULL_ARGS ([`8772c0a`](https://github.com/megalus/django-github-sso/commit/8772c0a83667f1a8f6df889be975d40e42f11b25))
+
+
 ## v5.0.2 (2025-09-16)
 
 ### Fixes
