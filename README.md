@@ -48,7 +48,7 @@ Full documentation is available at: [https://megalus.github.io/django-github-sso
 ### Requirements
 
 - Python 3.11+
-- Django 4.2+
+- Django 5.0+
 - A GitHub account or organization
 
 ### Installation
